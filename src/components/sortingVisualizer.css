@@ -11,8 +11,9 @@
   } 
 
   .array-circle {
-    width: 1px;
+    /* width: 1px;
     display: inline-block;
-    margin: 0 4px;
+    margin: 0 4px; */
     border-radius: 50%;
+    font-size: 25px;
   }

@@ -2,18 +2,19 @@ import React, { useReducer, useState, useEffect } from 'react';
 import { getMergeSortAnimations } from './helpers.js';
 import './sortingVisualizer.css';
 
+import { Nav } from 'react-bootstrap';
 
 // Change this value for the speed of the animations.
-const ANIMATION_SPEED_MS = 1;
+const ANIMATION_SPEED_MS = 100;
 
 // Change this value for the number of bars (value) in the array.
-const NUMBER_OF_ARRAY_BARS = 200;
+const NUMBER_OF_ARRAY_BARS = 3;
 
 // This is the main color of the array bars.
-const PRIMARY_COLOR = 'turquoise';
+const PRIMARY_COLOR = 'rgb(${value}, 12, 54)';
 
 // This is the color of array bars that are being compared throughout the animations.
-const SECONDARY_COLOR = 'red';
+const SECONDARY_COLOR = 'rgb(${value}, 12, 54)';
 
 
 function appReducer(state, action) {
@@ -54,11 +55,12 @@ export default function TodosApp() {
     */
     const placeholderArray = new Array(NUMBER_OF_ARRAY_BARS);
     for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
-      placeholderArray[i] = randomIntFromInterval(5, 730);
+      placeholderArray[i] = randomIntFromInterval(5, 255);
     }
     setArray(placeholderArray)
     console.log(array)
   }
+
 
   function mergeSort() {
     const animations = getMergeSortAnimations(array);
@@ -69,16 +71,19 @@ export default function TodosApp() {
         const [barOneIdx, barTwoIdx] = animations[i];
         const barOneStyle = arrayBars[barOneIdx].style;
         const barTwoStyle = arrayBars[barTwoIdx].style;
-        const color = i % 3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+        const color = i % 3 === 0 ? `rgb(${barTwoIdx}, 12, 54)` : `rgb(${barOneIdx}, 12, 54)`;
         setTimeout(() => {
           barOneStyle.backgroundColor = color;
           barTwoStyle.backgroundColor = color;
         }, i * ANIMATION_SPEED_MS);
       } else {
         setTimeout(() => {
-          const [barOneIdx, newHeight] = animations[i];
+          const [barOneIdx, newColor] = animations[i];
+          console.log(animations[i], 'animations[i]')
+
           const barOneStyle = arrayBars[barOneIdx].style;
-          barOneStyle.height = `${newHeight}px`;
+          console.log(barOneStyle, 'baronestylec')
+          barOneStyle.backgroundColor = `rgb(${newColor}, 12, 54)`;
         }, i * ANIMATION_SPEED_MS);
       }
     }
@@ -103,60 +108,63 @@ export default function TodosApp() {
 
       <div className="container-fluid">
 
-        <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
-          <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-            <div className="text-sm lg:flex-grow">
-              <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-                <button onClick={() => handleReset()}> Reset </button>
-              </a>
-              <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-                <button onClick={() => mergeSort()}> Merge Sort </button>
-              </a>
-              <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
-                Blog
-              </a>
-            </div>
-          </div>
-        </nav>
 
 
-        <div class="container">
-  <div class="row">
-    <div class="col-sm">
-      One of three columns
-    </div>
+
+        <Nav defaultActiveKey="/home" as="ul">
+          <Nav.Item as="li">
+            <Nav.Link>  <button onClick={() => handleReset()}> Reset </button>
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item as="li">
+            <Nav.Link eventKey="link-1">      <button onClick={() => mergeSort()}> Merge Sort </button>
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item as="li">
+            <Nav.Link eventKey="link-2">Link</Nav.Link>
+          </Nav.Item>
+        </Nav>
 
 
-    <div class="col-sm">
 
-          <div className="array-container">
-            {array.map((value, id) => (
-              <div
-                className="array-circle"
-                key={id}
-                style={{
-                  backgroundColor: PRIMARY_COLOR,
-                  // height: `${value}px`,
-                  position: 'relative',
-                  top: '20%',
+        <div className="container">
+          <div className="row">
+            <div className="col-sm">
+              One of three columns
+      </div>
 
-                }}>{value}</div>
-            ))}
-            <div>
-              <div id="center" className="orbit-center">
-                <span> π </span>
+
+            <div className="col-sm">
+
+              <div className="array-container">
+                {array.map((value, id) => (
+                  <div
+                    className="array-circle"
+                    key={id}
+                    value={value}
+                    style={{
+                      backgroundColor: `rgb(${value}, 12, 54)`,
+                      // height: `${value}px`,
+                      position: 'relative',
+                      top: '20%',
+
+                    }}>{value}</div>
+                ))}
+                <div>
+                  <div id="center" className="orbit-center">
+                    <span> π </span>
+                  </div>
+                </div>
               </div>
+
             </div>
+
+
+            <div className="col-sm">
+              One of three columns
+    </div>
           </div>
-
-    </div>
-
-
-    <div class="col-sm">
-      One of three columns
-    </div>
-  </div>
-</div>
+        </div>
 
 
 
