@@ -13,6 +13,6 @@
   .array-circle {
     width: 1px;
     display: inline-block;
-    margin: 0 1px;
+    margin: 0 4px;
     border-radius: 50%;
   }

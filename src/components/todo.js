@@ -46,9 +46,12 @@ export default function TodosApp() {
   const [array, setArray] = useState([]);
 
   function handleReset() {
-    // const placeholderArray = new Array(NUMBER_OF_ARRAY_BARS);
-    // makes the array that size
-    // new Array(5) == [undefined, undefined, undefined, undefined, undefined]
+    /*
+      This predefines the array size
+      const placeholderArray = new Array(NUMBER_OF_ARRAY_BARS);
+      makes the array that size
+      new Array(5) == [undefined, undefined, undefined, undefined, undefined]
+    */
     const placeholderArray = new Array(NUMBER_OF_ARRAY_BARS);
     for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
       placeholderArray[i] = randomIntFromInterval(5, 730);
@@ -88,55 +91,76 @@ export default function TodosApp() {
   useEffect(() => {
 
     var map = new MoonMap('#center', {
-      n: 100
+      moonSelector: '.array-circle',
+      radius: 140
     });
 
-    map.startCarousel(150);
+    // map.startCarousel(150);
   })
 
   return (
     <div>
-      <div className="container mx-auto">
 
-        <div className="array-container">
-          {array.map((value, id) => (
-            <div
-              className="array-circle"
-              key={id}
-              style={{
-                backgroundColor: PRIMARY_COLOR,
-                height: `${value}px`,
-                position: 'relative',
-                top: '20%',
+      <div className="container-fluid">
 
-              }}></div>
-          ))}
-          <div>
-
-            <div id="center" className="orbit-center">
-              <span>Center</span>
+        <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
+          <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+            <div className="text-sm lg:flex-grow">
+              <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+                <button onClick={() => handleReset()}> Reset </button>
+              </a>
+              <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+                <button onClick={() => mergeSort()}> Merge Sort </button>
+              </a>
+              <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
+                Blog
+              </a>
             </div>
-
           </div>
-        </div>
+        </nav>
+
+
+        <div class="container">
+  <div class="row">
+    <div class="col-sm">
+      One of three columns
+    </div>
+
+
+    <div class="col-sm">
+
+          <div className="array-container">
+            {array.map((value, id) => (
+              <div
+                className="array-circle"
+                key={id}
+                style={{
+                  backgroundColor: PRIMARY_COLOR,
+                  // height: `${value}px`,
+                  position: 'relative',
+                  top: '20%',
+
+                }}>{value}</div>
+            ))}
+            <div>
+              <div id="center" className="orbit-center">
+                <span> π </span>
+              </div>
+            </div>
+          </div>
+
+    </div>
+
+
+    <div class="col-sm">
+      One of three columns
+    </div>
+  </div>
+</div>
+
+
+
       </div>
-
-      <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
-        <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-          <div className="text-sm lg:flex-grow">
-            <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-              <button onClick={() => handleReset()}> Reset </button>
-            </a>
-            <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-              <button onClick={() => mergeSort()}> Merge Sort </button>
-            </a>
-            <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
-              Blog
-            </a>
-          </div>
-        </div>
-      </nav>
-
       {/* <button onClick={()=> dispatch({ type: 'resetArray' })}> Reset Sort</button> */}
     </div>
   )
@@ -150,6 +174,7 @@ function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+// Not working 
 function arraysAreEqual(arrayOne, arrayTwo) {
   if (arrayOne.length !== arrayTwo.length) return false;
   for (let i = 0; i < arrayOne.length; i++) {
@@ -181,7 +206,8 @@ var MoonMap = function (querySelector, options) {
     activeClass: 'active',
     content: '',
     degrees: 360,
-    margin: 0,
+    // This changes the width of the circle, increase to make the circle bigger
+    margin: 100,
     moonClass: 'moon',
     n: 12,
     radius: false,
@@ -210,12 +236,10 @@ var MoonMap = function (querySelector, options) {
   this.map = element;
 
   this.makeAbsolute = function (str) {
-
     return '<div style="position:relative"><div className="_moon_content" style="position:absolute;width:100%;height:100%">' + str + '</div></div>';
-
-
   }
   console.log(element, 'element ')
+
   if (!this.options.radius)
     this.options.radius = element.offsetWidth + this.options.margin;
 

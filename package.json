@@ -7,12 +7,14 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "animejs": "^3.1.0",
+    "bootstrap": "^4.4.1",
     "react": "^16.13.1",
+    "react-bootstrap": "^1.0.0",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"
   },
   "scripts": {
-    "build:style":"tailwind build src/css/tailwind.css -o src/css/tailwind.css",
+    "build:style": "tailwind build src/css/tailwind.css -o src/css/tailwind.css",
     "start": "npm run build:style && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
