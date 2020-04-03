@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import TodosApp from './components/todo';
+import './css/tailwind.css';
 
 function App() {
   return (
