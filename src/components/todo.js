@@ -3,12 +3,13 @@ import { getMergeSortAnimations } from './helpers.js';
 import './sortingVisualizer.css';
 
 import { Nav, Container, Row, Col } from 'react-bootstrap';
+import { set } from 'animejs';
 
 // Change this value for the speed of the animations.
 const ANIMATION_SPEED_MS = 1;
 
 // Change this value for the number of circles (value) in the array.
-const NUMBER_OF_ARRAY_CIRCLES = 25;
+const NUMBER_OF_ARRAY_CIRCLES = 20;
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = 'rgb(${value}, 12, 54)';
@@ -53,6 +54,13 @@ export default function TodosApp() {
       makes the array that size
       new Array(5) == [undefined, undefined, undefined, undefined, undefined]
     */
+    // var elements = document.getElementsByClassName('moon');
+    // while(elements.length > 0){
+    //     elements[0].parentNode.removeChild(elements[0]);
+    // }
+  //  var el = document.getElementsByClassName('moon');
+  //  if(el) {el.remove()}
+  // console.log(el.remove() , 'el')
     const placeholderArray = new Array(NUMBER_OF_ARRAY_CIRCLES);
     for (let i = 0; i < NUMBER_OF_ARRAY_CIRCLES; i++) {
       placeholderArray[i] = randomIntFromInterval(1, 255);
@@ -100,14 +108,13 @@ export default function TodosApp() {
   }
 
   useEffect(() => {
-
-    var map = new MoonMap('#center', {
+    var circleEffect = new MoonMap('#center', {
       moonSelector: '.array-circle',
       // This changes the radius of the overall circle
-      radius: 140
+      radius: 180
     });
 
-    // map.startCarousel(150);
+    // circleEffect.startCarousel(150);
   })
 
   return (
@@ -192,7 +199,6 @@ export default function TodosApp() {
           <div className="container">
             <div className="row">
               <div className="col-sm">
-                One of three columns
             </div>
 
               <div className="col-sm">
@@ -222,7 +228,6 @@ export default function TodosApp() {
               </div>
 
               <div className="col-sm">
-                One of three columns
             </div>
             </div>
           </div>
