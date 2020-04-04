@@ -2,13 +2,13 @@ import React, { useReducer, useState, useEffect } from 'react';
 import { getMergeSortAnimations } from './helpers.js';
 import './sortingVisualizer.css';
 
-import { Nav } from 'react-bootstrap';
+import { Nav, Container, Row, Col } from 'react-bootstrap';
 
 // Change this value for the speed of the animations.
-const ANIMATION_SPEED_MS = 100;
+const ANIMATION_SPEED_MS = 1;
 
-// Change this value for the number of bars (value) in the array.
-const NUMBER_OF_ARRAY_BARS = 3;
+// Change this value for the number of circles (value) in the array.
+const NUMBER_OF_ARRAY_CIRCLES = 25;
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = 'rgb(${value}, 12, 54)';
@@ -49,13 +49,13 @@ export default function TodosApp() {
   function handleReset() {
     /*
       This predefines the array size
-      const placeholderArray = new Array(NUMBER_OF_ARRAY_BARS);
+      const placeholderArray = new Array(NUMBER_OF_ARRAY_CIRCLES);
       makes the array that size
       new Array(5) == [undefined, undefined, undefined, undefined, undefined]
     */
-    const placeholderArray = new Array(NUMBER_OF_ARRAY_BARS);
-    for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
-      placeholderArray[i] = randomIntFromInterval(5, 255);
+    const placeholderArray = new Array(NUMBER_OF_ARRAY_CIRCLES);
+    for (let i = 0; i < NUMBER_OF_ARRAY_CIRCLES; i++) {
+      placeholderArray[i] = randomIntFromInterval(1, 255);
     }
     setArray(placeholderArray)
     console.log(array)
@@ -71,7 +71,7 @@ export default function TodosApp() {
         const [barOneIdx, barTwoIdx] = animations[i];
         const barOneStyle = arrayBars[barOneIdx].style;
         const barTwoStyle = arrayBars[barTwoIdx].style;
-        const color = i % 3 === 0 ? `rgb(${barTwoIdx}, 12, 54)` : `rgb(${barOneIdx}, 12, 54)`;
+        const color = i % 3 === 0 ? `rgb(${barTwoIdx}, 206, 133)` : `rgb(${barOneIdx}, 206, 133)`;
         setTimeout(() => {
           barOneStyle.backgroundColor = color;
           barTwoStyle.backgroundColor = color;
@@ -82,21 +82,28 @@ export default function TodosApp() {
           console.log(animations[i], 'animations[i]')
 
           const barOneStyle = arrayBars[barOneIdx].style;
-          console.log(barOneStyle, 'baronestylec')
-          barOneStyle.backgroundColor = `rgb(${newColor}, 12, 54)`;
+          console.log(newColor, 'newColor')
+          console.log(barOneStyle.backgroundColor, 'barOneStyle.backgroundColor')
+          console.log(animations[1], 'animations[i]')
+
+
+          barOneStyle.backgroundColor = `rgb(${newColor}, 206, 133)`;
+          console.log(barOneStyle.backgroundColor, 'barOneStyle.backgroundColor')
+
         }, i * ANIMATION_SPEED_MS);
       }
     }
   }
 
   function bubblerSort() {
-
+    console.log("Hello World")
   }
 
   useEffect(() => {
 
     var map = new MoonMap('#center', {
       moonSelector: '.array-circle',
+      // This changes the radius of the overall circle
       radius: 140
     });
 
@@ -105,71 +112,129 @@ export default function TodosApp() {
 
   return (
     <div>
+      {/*  Header */}
+      <div className="gm-header">
+        <div className="container-fluid">
 
-      <div className="container-fluid">
+          <Container fluid>
+            <Row>
+              <Col>
+        <div className="gm-logo"> 
+        <h1 className="gm-font gm-font-logo ">  Algo Sorter </h1>
+        </div>
+
+                <Nav className="justify-content-end" as="ul">
+                  
+                  <Nav.Item as="li">
+                    <Nav.Link>
+                      <button
+                        className="gm-font"
+                        onClick={() => handleReset()}
+                      >
+                        Reset
+              </button>
+                    </Nav.Link>
+                  </Nav.Item>
+
+                  <Nav.Item as="li">
+                    <Nav.Link eventKey="link-1">
+                      <button
+                        className="gm-font"
+                        onClick={() => mergeSort()}
+                      >
+                        Merge Sort
+              </button>
+                    </Nav.Link>
+                  </Nav.Item>
+
+                  <Nav.Item as="li">
+                    <Nav.Link eventKey="link-2">
+                      <button
+                        className="gm-font"
+                        onClick={() => bubblerSort()}
+                      >
+                        Bubble Sort
+              </button>
+                    </Nav.Link>
+                  </Nav.Item>
+
+                  <Nav.Item as="li">
+                    <Nav.Link eventKey="link-3">
+                      <button
+                        className="gm-font"
+                        onClick={() => bubblerSort()}
+                      >
+                        Heap Sort
+              </button>
+                    </Nav.Link>
+                  </Nav.Item>
 
 
+                  <Nav.Item as="li">
+                    <Nav.Link eventKey="link-4">
+                      <button
+                        className="gm-font"
+                        onClick={() => bubblerSort()}
+                      >
+                        Quick Sort
+              </button>
+                    </Nav.Link>
+                  </Nav.Item>
 
+                </Nav>
+              </Col>
+            </Row>
+          </Container>
+        </div>
+        </div>
+        {/* MAIN BODY  */}
+      <div className="gm-body">
+          <div className="container">
+            <div className="row">
+              <div className="col-sm">
+                One of three columns
+            </div>
 
-        <Nav defaultActiveKey="/home" as="ul">
-          <Nav.Item as="li">
-            <Nav.Link>  <button onClick={() => handleReset()}> Reset </button>
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item as="li">
-            <Nav.Link eventKey="link-1">      <button onClick={() => mergeSort()}> Merge Sort </button>
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item as="li">
-            <Nav.Link eventKey="link-2">Link</Nav.Link>
-          </Nav.Item>
-        </Nav>
-
-
-
-        <div className="container">
-          <div className="row">
-            <div className="col-sm">
-              One of three columns
-      </div>
-
-
-            <div className="col-sm">
-
-              <div className="array-container">
-                {array.map((value, id) => (
-                  <div
-                    className="array-circle"
-                    key={id}
-                    value={value}
-                    style={{
-                      backgroundColor: `rgb(${value}, 12, 54)`,
-                      // height: `${value}px`,
-                      position: 'relative',
-                      top: '20%',
-
-                    }}>{value}</div>
-                ))}
-                <div>
-                  <div id="center" className="orbit-center">
-                    <span> π </span>
+              <div className="col-sm">
+                <div className="array-container">
+                  {array.map((value, id) => (
+                    <div
+                      className="array-circle"
+                      key={id}
+                      value={value}
+                      style={{
+                        backgroundColor: `rgb(${value}, 206, 133)`,
+                        // height: `${value}px`,
+                        position: 'relative',
+                        top: '20%',
+                        width: '43px',
+                        height: '43px',
+                        borderColor: 'white',
+                      }}>
+                    </div>
+                  ))}
+                  <div>
+                    <div id="center" className="orbit-center">
+                      <span className="gm-font"> π </span>
+                    </div>
                   </div>
                 </div>
               </div>
 
+              <div className="col-sm">
+                One of three columns
             </div>
-
-
-            <div className="col-sm">
-              One of three columns
-    </div>
+            </div>
           </div>
         </div>
 
+      
 
-
+      {/*  FOOTER  */}
+      <div className="gm-footer">
+        <h3 className="gm-font"> 255 </h3>
+         footer 
       </div>
-      {/* <button onClick={()=> dispatch({ type: 'resetArray' })}> Reset Sort</button> */}
     </div>
   )
 }

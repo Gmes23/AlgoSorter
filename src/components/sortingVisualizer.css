@@ -1,19 +1,19 @@
 .array-container {
-    position: absolute;
-    left: 100px;
-    top: 300px;
-  }
-  
-  .array-bar {
-    width: 2px;
-    display: inline-block;
-    margin: 0 1px;
-  } 
+  position: absolute;
+  left: 100px;
+  top: 200px;
+}
 
-  .array-circle {
-    /* width: 1px;
-    display: inline-block;
-    margin: 0 4px; */
-    border-radius: 50%;
-    font-size: 25px;
-  }
+.array-bar {
+  width: 2px;
+  display: inline-block;
+  margin: 0 1px;
+}
+
+.array-circle {
+  display: inline-block;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  /* font-size: 25px; */
+}

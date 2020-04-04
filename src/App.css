@@ -1,9 +1,26 @@
+/*  
+  - Fonts
+  - App
+  - Components
+ */
+
+ @font-face {
+  font-family: "CustomFont";
+  src: url("./css/fonts/wotfard-regular-webfont.ttf");
+  }
+
+  @font-face {
+    font-family: "CustomFont2";
+    src: url("./css/fonts/Roboto-Black.ttf");
+    }
+  
+
 .App {
   position: absolute;
   min-height: 100vh;
   min-width: 100vw;
   text-align: center;
-  /* background-color: black; */
+  background-color: black;
 }
 
 .App-logo {
@@ -69,7 +86,7 @@
   padding: 0px;
   font-size: 13px;
   line-height: 43px;
-  border: 1px solid #ccc;
+  border: 2px solid #000000;
   font-size: 0px;
   transition: 0.3s background, 0s color;
   z-index: 1;
@@ -78,6 +95,48 @@
 .moon.active {
   background: #2ecc71;
   color: #fff;
+  border-color: white;
   font-size: 13px;
   z-index: 2;
+}
+
+
+.gm-font {
+  color: white;
+  font-family: CustomFont2;
+}
+
+.gm-header {
+  position: absolute;
+  top: 0px;
+  height: 10vh;
+  width: 100vw;
+  padding-top: 3vh;
+  /* background-color: red; */
+}
+
+.gm-body {
+  position: absolute;
+  top: 10vh;
+  height: 70vh;
+  width: 100vw;
+  /* background-color: #80d8ff; */
+}
+
+.gm-footer {
+  position: absolute;
+  top: 80vh;
+  height: 20vh;
+  width: 100vw;
+  /* background-color: #fbdd9d; */
+}
+
+.gm-logo {
+  position: absolute;
+  font-size: 2em;
+  padding-left: 1rem;
+}
+
+.gm-font-logo {
+  font-size: 1em;
 }
