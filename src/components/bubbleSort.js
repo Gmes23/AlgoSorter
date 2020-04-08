@@ -1,29 +1,27 @@
 
 
-export function bubbleSortAnimation(array) {
+export function getBubbleSortAnimations(array) {
     const animations = [];
+    let inputArr = array;
+    let len = inputArr.length;
+    let swapped;
+    do {
+        swapped = false;
+        for (let i = 0; i < len; i++) {
+            if (inputArr[i] > inputArr[i + 1]) {
 
-    let swapped = false;
+                let tmp = inputArr[i];
 
-    if (array.length <= 1) return array;
+                inputArr[i] = inputArr[i + 1];
+                animations.push([inputArr[i]])
+                inputArr[i + 1] = tmp;
+                animations.push([inputArr[i + 1]])
 
-    let endOfArray = array.length - 1;
-
-    do { bubbleSort(endOfArray, animations) } while (swapped);
-    return animations;
-}
-
-
-function bubbleSort(endOfArray, animations) {
-
-    for (let i=0; i < end; i++) {
-        if (unsortedArray[i] > unsortedArray[i+1]) {
-            swapped = true;
-            let temp = unsortedArray[i];
-            unsortedArray[i] = unsortedArray[i + 1];
-            unsortedArray[i + 1] = temp;
+                swapped = true;
+            }
         }
-    }
-    end --;
+    } while (swapped);
 
-};
+    return inputArr;
+
+}

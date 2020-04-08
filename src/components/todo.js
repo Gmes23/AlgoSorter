@@ -1,15 +1,17 @@
 import React, { useReducer, useState, useEffect } from 'react';
-import { getMergeSortAnimations } from './helpers.js';
+import { getMergeSortAnimations } from './mergeSort.js';
+import { getBubbleSortAnimations } from './bubbleSort.js';
+
 import './sortingVisualizer.css';
 
 import { Nav, Container, Row, Col } from 'react-bootstrap';
 import { set } from 'animejs';
 
 // Change this value for the speed of the animations.
-const ANIMATION_SPEED_MS = 1;
+const ANIMATION_SPEED_MS = 80;
 
 // Change this value for the number of circles (value) in the array.
-const NUMBER_OF_ARRAY_CIRCLES = 20;
+const NUMBER_OF_ARRAY_CIRCLES = 30;
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = 'rgb(${value}, 12, 54)';
@@ -80,9 +82,17 @@ export default function TodosApp() {
         const barOneStyle = arrayBars[barOneIdx].style;
         const barTwoStyle = arrayBars[barTwoIdx].style;
         const color = i % 3 === 0 ? `rgb(${barTwoIdx}, 206, 133)` : `rgb(${barOneIdx}, 206, 133)`;
+        const border = i % 3 === 0 ? `solid` : `solid`;
+        const borderColor = i % 3 === 0 ? `red` : `blue`;
+
+
         setTimeout(() => {
           barOneStyle.backgroundColor = color;
           barTwoStyle.backgroundColor = color;
+          barOneStyle.border = border;
+          barTwoStyle.border = border;
+          barOneStyle.borderColor = borderColor;
+          barTwoStyle.borderColor = borderColor;
         }, i * ANIMATION_SPEED_MS);
       } else {
         setTimeout(() => {
@@ -90,28 +100,30 @@ export default function TodosApp() {
           console.log(animations[i], 'animations[i]')
 
           const barOneStyle = arrayBars[barOneIdx].style;
-          console.log(newColor, 'newColor')
           console.log(barOneStyle.backgroundColor, 'barOneStyle.backgroundColor')
-          console.log(animations[1], 'animations[i]')
-
 
           barOneStyle.backgroundColor = `rgb(${newColor}, 206, 133)`;
-          console.log(barOneStyle.backgroundColor, 'barOneStyle.backgroundColor')
-
         }, i * ANIMATION_SPEED_MS);
       }
     }
   }
 
   function bubblerSort() {
-    console.log("Hello World")
+    console.log(array, 'array')
+    getBubbleSortAnimations(array);
+    console.log(array, 'array')
+
+  }
+
+  function heapSort() {
+    console.log('heap sort')
   }
 
   useEffect(() => {
     var circleEffect = new MoonMap('#center', {
       moonSelector: '.array-circle',
       // This changes the radius of the overall circle
-      radius: 180
+      radius: 220
     });
 
     // circleEffect.startCarousel(150);
@@ -169,7 +181,7 @@ export default function TodosApp() {
                     <Nav.Link eventKey="link-3">
                       <button
                         className="gm-font"
-                        onClick={() => bubblerSort()}
+                        onClick={() => heapSort()}
                       >
                         Heap Sort
               </button>
