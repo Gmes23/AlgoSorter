@@ -8,10 +8,10 @@ import { Nav, Container, Row, Col } from 'react-bootstrap';
 import { set } from 'animejs';
 
 // Change this value for the speed of the animations.
-const ANIMATION_SPEED_MS = 80;
+const ANIMATION_SPEED_MS = 10;
 
 // Change this value for the number of circles (value) in the array.
-const NUMBER_OF_ARRAY_CIRCLES = 30;
+const NUMBER_OF_ARRAY_CIRCLES = 10;
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = 'rgb(${value}, 12, 54)';
@@ -73,9 +73,56 @@ export default function TodosApp() {
 
 
   function mergeSort() {
+    console.log(array)
+
     const animations = getMergeSortAnimations(array);
+    console.log(array)
+
+    console.log(animations, ' animations')
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-circle');
+      const isColorChange = i % 3 !== 2;
+      if (isColorChange) {
+        const [barOneIdx, barTwoIdx] = animations[i];
+        console.log([barOneIdx, barTwoIdx] , ' [barOneIdx, barTwoIdx] ')
+        const barOneStyle = arrayBars[barOneIdx].style;
+        const barTwoStyle = arrayBars[barTwoIdx].style;
+        const color = i % 3 === 0 ? `rgb(${barTwoIdx}, 206, 133)` : `rgb(${barOneIdx}, 206, 133)`;
+        const border = i % 3 === 0 ? `solid` : `solid`;
+        const borderColor = i % 3 === 0 ? `red` : `blue`;
+
+
+        setTimeout(() => {
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
+          barOneStyle.border = border;
+          barTwoStyle.border = border;
+          barOneStyle.borderColor = borderColor;
+          barTwoStyle.borderColor = borderColor;
+        }, i * ANIMATION_SPEED_MS);
+      } else {
+        setTimeout(() => {
+          const [barOneIdx, newColor ] = animations[i];
+          console.log(animations[i], 'animations[i]')
+
+          const barOneStyle = arrayBars[barOneIdx].style;
+          console.log(barOneStyle.backgroundColor, 'barOneStyle.backgroundColor')
+
+          barOneStyle.backgroundColor = `rgb(${newColor}, 206, 133)`;
+        }, i * ANIMATION_SPEED_MS);
+      }
+    }
+  }
+
+  function bubblerSort() {
+    console.log(array, 'array')
+    const animations = getBubbleSortAnimations(array);
+    console.log(array, 'array')
+    console.log(animations , 'animations ')
+
+    for (let i = 0; i < animations.length; i++) {
+      const arrayBars = document.getElementsByClassName('array-circle');
+      console.log(arrayBars, 'arraybars ')
       const isColorChange = i % 3 !== 2;
       if (isColorChange) {
         const [barOneIdx, barTwoIdx] = animations[i];
@@ -96,23 +143,18 @@ export default function TodosApp() {
         }, i * ANIMATION_SPEED_MS);
       } else {
         setTimeout(() => {
-          const [barOneIdx, newColor] = animations[i];
-          console.log(animations[i], 'animations[i]')
+          const [barOneIdx, newColor2] = animations[i];
+          console.log(animations[i], 'xx  animations[i]')
 
           const barOneStyle = arrayBars[barOneIdx].style;
           console.log(barOneStyle.backgroundColor, 'barOneStyle.backgroundColor')
 
-          barOneStyle.backgroundColor = `rgb(${newColor}, 206, 133)`;
+          barOneStyle.backgroundColor = `rgb(${newColor2}, 206, 133)`;
+          console.log(barOneStyle.backgroundColor, 'barOneStyle.backgroundColor')
+
         }, i * ANIMATION_SPEED_MS);
       }
     }
-  }
-
-  function bubblerSort() {
-    console.log(array, 'array')
-    getBubbleSortAnimations(array);
-    console.log(array, 'array')
-
   }
 
   function heapSort() {
