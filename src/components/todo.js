@@ -2,6 +2,8 @@ import React, { useReducer, useState, useEffect } from 'react';
 import { getMergeSortAnimations } from './mergeSort.js';
 import { getBubbleSortAnimations } from './bubbleSort.js';
 import { getQuickSortAnimations } from './quickSort.js';
+import { getMaxHeapAnimations } from './heapSort.js';
+
 
 
 import './sortingVisualizer.css';
@@ -205,7 +207,8 @@ export default function TodosApp() {
 
 
   function heapSort() {
-    console.log('heap sort')
+    const animations = getMaxHeapAnimations(array);
+    console.log(animations)
   }
 
   useEffect(() => {
