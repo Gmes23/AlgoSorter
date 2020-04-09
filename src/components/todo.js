@@ -1,11 +1,14 @@
 import React, { useReducer, useState, useEffect } from 'react';
 import { getMergeSortAnimations } from './mergeSort.js';
 import { getBubbleSortAnimations } from './bubbleSort.js';
+import { getQuickSortAnimations } from './quickSort.js';
+
 
 import './sortingVisualizer.css';
 
 import { Nav, Container, Row, Col } from 'react-bootstrap';
 import { set } from 'animejs';
+import { AnimationMixer } from 'three';
 
 // Change this value for the speed of the animations.
 const ANIMATION_SPEED_MS = 10;
@@ -157,6 +160,14 @@ export default function TodosApp() {
     }
   }
 
+  function quickSort() {
+    console.log(array, 'array');
+    const animations = getQuickSortAnimations(array);
+    console.log(animations, 'arrrrr')
+
+  }
+
+
   function heapSort() {
     console.log('heap sort')
   }
@@ -235,7 +246,7 @@ export default function TodosApp() {
                     <Nav.Link eventKey="link-4">
                       <button
                         className="gm-font"
-                        onClick={() => bubblerSort()}
+                        onClick={() => quickSort()}
                       >
                         Quick Sort
               </button>
