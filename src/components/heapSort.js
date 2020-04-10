@@ -1,25 +1,10 @@
-//  We will be using max heap only 
 export function getMaxHeapAnimations(array) {
-    let input = array;
-    console.log(array, 'array max heap ')
-    return heapSort(input);
-}
 
-function heapSort(input) {   
-    arrLength = input.length
+    let arrLength;
 
-    for (let i = Math.floor(arrLength / 2); i >= 0; i -= 1)      {
-        maxHeap(input, i)
-      }
-
-    for (i = input.length - 1; i > 0; i--) {
-        swap(input, 0, i)
-        arrLength--
-
-        maxHeap(input, 0)
-    }
-    return
-}
+    const list = array;
+return heapSort(list)
+    
 // create max heap
 function maxHeap(input, i) {
     const left = 2 * i + 1
@@ -47,10 +32,22 @@ function swap(input, indexA, indexB) {
     input[indexB] = temp
 }
 
-// let arrLength
+function heapSort(input) {   
+    arrLength = input.length;
+    let i = Math.floor(arrLength / 2);
+    for (i; i >= 0; i -= 1) {
+        maxHeap(input, i)
+      }
 
-// const list = [4, 2, 3, 1, 5]
+    for (i = input.length - 1; i > 0; i--) {
+        swap(input, 0, i)
+        arrLength--
 
-// const sorted = heapSort(list)
+        maxHeap(input, 0)
+    }
+    return input;
+}
 
-// console.log(list)
+
+
+}
