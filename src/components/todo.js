@@ -253,7 +253,18 @@ export default function TodosApp() {
       // This changes the radius of the overall circle
       radius: 220
     });
-
+    let cx = document.querySelector("canvas").getContext("2d"); 
+    function branch(length, angle, scale) {
+      cx.fillRect(0, 0, 1, length);
+      if (length < 8) return;
+      cx.save();
+      cx.translate(0, length); cx.rotate(-angle);
+      branch(length * scale, angle, scale); cx.rotate(2 * angle);
+      branch(length * scale, angle, scale);
+      cx.restore(); 
+    }
+      cx.translate(300, 0);
+      branch(60, 0.5, 0.8);
     // circleEffect.startCarousel(150);
   })
 
@@ -378,11 +389,12 @@ export default function TodosApp() {
       {/*  FOOTER  */}
       <div className="gm-footer">
         <h3 className="gm-font"> 255 </h3>
-         footer 
+         <canvas className="gm-canvas" width="600" height="300"></canvas>
       </div>
     </div>
   )
 }
+
 
 
 
