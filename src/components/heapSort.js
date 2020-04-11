@@ -15,6 +15,7 @@ export function getMaxHeapAnimations(array) {
 
         if (left < arrLength && input[left] > input[max]) {
             max = left
+
         }
 
         if (right < arrLength && input[right] > input[max]) {
@@ -29,8 +30,10 @@ export function getMaxHeapAnimations(array) {
             maxHeap(input, max)
         }
 
-        animations.push([max, i])
+        // animations.push([max, i])
         animations.push([i, max])
+        animations.push([i, max])
+
 
         animations.push([i, input[i]])
 
