@@ -24,7 +24,7 @@ export function getMaxHeapAnimations(array) {
 
         }
 
-        if (max != i) {
+        if (max !== i) {
 
             swap(input, i, max)
             maxHeap(input, max)

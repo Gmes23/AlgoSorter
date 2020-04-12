@@ -1,7 +1,7 @@
 import React, { useReducer, useState, useEffect } from 'react';
 import { getMergeSortAnimations } from './mergeSort.js';
 import { getBubbleSortAnimations } from './bubbleSort.js';
-import { getQuickSortAnimations } from './quickSort.js';
+import { getQuickSortAnimations } from './quickSort2.js';
 import { getMaxHeapAnimations } from './heapSort.js';
 
 

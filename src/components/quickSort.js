@@ -10,7 +10,6 @@ function quickSort(arr) {
     const animations = [];
 
     // Checks that we have a valid array 
-    console.log(animations, ' animations ')
     if (arr.length === 1) { 
         return arr;
     }
@@ -20,7 +19,7 @@ function quickSort(arr) {
     // We then set two empty arrays
     var leftArr = [];
     var rightArr = [];
-
+    
     // Starting from the pivot we compare is the current element in the array is less then 
     // our pivot and place it on a left array, if its equal to or greater we place it on the 
     // right array 
@@ -28,11 +27,9 @@ function quickSort(arr) {
         animations.push([i, pivot])
         if (arr[i] < pivot) {
             leftArr.push(arr[i]);
-            animations.push([i, ...leftArr]);
             
         } else {
             rightArr.push(arr[i]);
-            animations.push([i, ...rightArr]);
 
         }
     }
