@@ -9,9 +9,7 @@ export function getQuickSortAnimations(array) {
         items[leftIndex] = items[rightIndex];
         items[rightIndex] = temp;
 
-        animations.push([temp, items[leftIndex]]);
-        animations.push([items[rightIndex], temp]);
-        animations.push([items, 'items'])
+        
     }
 
     function partition(items, left, right) {
@@ -23,6 +21,7 @@ export function getQuickSortAnimations(array) {
                 i++;
             }
             while (items[j] > pivot) {
+
                 j--;
             }
             if (i <= j) {
@@ -31,19 +30,26 @@ export function getQuickSortAnimations(array) {
                 j--;
             }
         }
-        animations.push([pivot, 'i'])
+
         return i;
     }
 
     function quickSort(items, left, right) {
+        animations.push([left, right])
+
         let index;
         if (items.length > 1) {
             index = partition(items, left, right); //index returned from partition
+            animations.push([index, index, '1'])
             if (left < index - 1) { //more elements on the left side of the pivot
+            animations.push([left, right, '2'])
+
                 quickSort(items, left, index - 1);
             }
             if (index < right) { //more elements on the right side of the pivot
-                quickSort(items, index, right);
+            animations.push([right, items[index]])
+
+                quickSort(index, right, '3');
             }
         }
 
