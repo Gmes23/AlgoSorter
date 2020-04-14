@@ -21,14 +21,14 @@ export function getBubbleSortAnimations(array) {
                 
 
 
-                animations.push([i,i])
+                animations.push([i,i + 1])
                 array[i] = array[i + 1];
 
                 animations.push([i,i + 1])
 
 
                 array[i + 1] = tmp;
-                animations.push([i ,array[i]])
+                animations.push([i ,array[i], i + 1, array[i + 1]])
 
 
                 swapped = true;
