@@ -31,20 +31,25 @@ export function getMaxHeapAnimations(array) {
         }
 
         // animations.push([max, i])
-        animations.push([i, max])
-        animations.push([i, max])
+        // animations.push([i, max])
+        // animations.push([i, max])
 
 
-        animations.push([i, input[i]])
+        // animations.push([i, input[i]])
 
 
     }
 
     function swap(input, indexA, indexB) {
+
+        animations.push([indexA, indexB])
         const temp = input[indexA]
 
         input[indexA] = input[indexB]
         input[indexB] = temp
+        animations.push([indexA, indexB])
+        animations.push([ indexA, input[indexA], indexB, input[indexB]])
+
     }
 
     function heapSort(input) {

@@ -16,7 +16,7 @@ import { AnimationMixer } from 'three';
 const ANIMATION_SPEED_MS = 10;
 
 // Change this value for the number of circles (value) in the array.
-const NUMBER_OF_ARRAY_CIRCLES = 40;
+const NUMBER_OF_ARRAY_CIRCLES = 4;
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = 'rgb(${value}, 12, 54)';
@@ -223,18 +223,26 @@ export default function TodosApp() {
 
 
   function heapSort() {
+
+    console.log(array, 'array')
+
     const animations = getMaxHeapAnimations(array);
     console.log(animations)
+    console.log(array, 'array after')
+
 
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-circle');
-      console.log(arrayBars, 'arraybars ')
+      
+      // console.log(arrayBars, 'arraybars ')
+
       const isColorChange = i % 3 !== 2;
       if (isColorChange) {
         const [barOneIdx, barTwoIdx] = animations[i];
         const barOneStyle = arrayBars[barOneIdx].style;
         const barTwoStyle = arrayBars[barTwoIdx].style;
-        const color = i % 3 === 0 ? `rgb(${barTwoIdx}, 206, 133)` : `rgb(${barOneIdx}, 206, 133)`;
+        const color = i % 3 === 0 ? barOneStyle.backgroundColor : barTwoStyle.backgroundColor ;
+
         const border = i % 3 === 0 ? `solid` : `solid`;
         const borderColor = i % 3 === 0 ? `red` : `blue`;
 
@@ -249,14 +257,22 @@ export default function TodosApp() {
         }, i * ANIMATION_SPEED_MS);
       } else {
         setTimeout(() => {
-          const [barOneIdx, newColor2] = animations[i];
+          const [barOneIdx, newColor, barTwoIdx, newColor2 ] = animations[i];
           console.log(animations[i], 'xx  animations[i]')
 
           const barOneStyle = arrayBars[barOneIdx].style;
           console.log(barOneStyle.backgroundColor, 'barOneStyle.backgroundColor')
 
-          barOneStyle.backgroundColor = `rgb(${newColor2}, 206, 133)`;
+          barOneStyle.backgroundColor = `rgb(${newColor}, 206, 133)`;
           console.log(barOneStyle.backgroundColor, 'barOneStyle.backgroundColor')
+
+
+
+          const barTwoStyle = arrayBars[barTwoIdx].style;
+          console.log(barTwoStyle.backgroundColor, 'barTwostyle.backgroundColor')
+
+          barTwoStyle.backgroundColor = `rgb(${newColor2}, 206, 133)`;
+          console.log(barOneStyle.backgroundColor, 'barTwoStyle.backgroundColor')
 
         }, i * ANIMATION_SPEED_MS);
       }
