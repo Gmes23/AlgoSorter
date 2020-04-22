@@ -16,7 +16,7 @@ import { AnimationMixer } from 'three';
 const ANIMATION_SPEED_MS = 10;
 
 // Change this value for the number of circles (value) in the array.
-const NUMBER_OF_ARRAY_CIRCLES = 4;
+const NUMBER_OF_ARRAY_CIRCLES = 40;
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = 'rgb(${value}, 12, 54)';

@@ -9,7 +9,7 @@ export function getQuickSortAnimations(array) {
 function quickSort(arr) {
     const animations = [];
 
-    // Checks that we have a valid array 
+    // Checks for valid array
     if (arr.length === 1) { 
         return arr;
     }
@@ -38,22 +38,13 @@ function quickSort(arr) {
     // running quicksort recusively
     if (leftArr.length > 0 && rightArr.length > 0) {
     
-        // animations.push([pivot]);
-
-
         return [...quickSort(leftArr), pivot, ...quickSort(rightArr)], animations;
         // our pivot can be the last element so we keep quick sorting until the left array length is zero
     } else if (leftArr.length > 0) {
-        // animations.push([...quickSort(leftArr), pivot]);
-
-        // animations.push([leftArr, rightArr]);
-      
 
         return [...quickSort(leftArr), pivot], animations;
         // our pivot could have move to the front so we have conditional to quick sort to the right array as well
     } else {
-        // animations.push([leftArr, rightArr]);
-        // animations.push([pivot, ...quickSort(rightArr)]);
 
         return [pivot, ...quickSort(rightArr)], animations;
     }

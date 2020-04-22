@@ -30,14 +30,6 @@ export function getMaxHeapAnimations(array) {
             maxHeap(input, max)
         }
 
-        // animations.push([max, i])
-        // animations.push([i, max])
-        // animations.push([i, max])
-
-
-        // animations.push([i, input[i]])
-
-
     }
 
     function swap(input, indexA, indexB) {
@@ -58,14 +50,12 @@ export function getMaxHeapAnimations(array) {
         for (i; i >= 0; i -= 1) {
 
             maxHeap(input, i)
-
         }
 
         for (i = input.length - 1; i > 0; i--) {
 
             swap(input, 0, i)
             arrLength--
-
             maxHeap(input, 0)
         }
 
