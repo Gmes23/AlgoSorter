@@ -1,6 +1,6 @@
 export function getQuickSortAnimations(array) {
 
-    console.log(array, ' array fromqs')
+    console.log(array, ' array from qs')
     let newArr = quickSort(array)
     return newArr;
 
