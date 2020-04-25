@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/build/static/css/main.d590b820.chunk.css",
+    "main.js": "/build/static/js/main.a1ae876a.chunk.js",
+    "runtime-main.js": "/build/static/js/runtime-main.39ff2ee5.js",
+    "static/css/2.35013e12.chunk.css": "/build/static/css/2.35013e12.chunk.css",
+    "static/js/2.01d45083.chunk.js": "/build/static/js/2.01d45083.chunk.js",
+    "index.html": "/build/index.html",
+    "precache-manifest.31c0e25c1459f85b44465fc27dd83e94.js": "/build/precache-manifest.31c0e25c1459f85b44465fc27dd83e94.js",
+    "service-worker.js": "/build/service-worker.js",
+    "static/js/2.01d45083.chunk.js.LICENSE.txt": "/build/static/js/2.01d45083.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/build/static/media/wotfard-regular-webfont.2923aa61.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.39ff2ee5.js",
+    "static/css/2.35013e12.chunk.css",
+    "static/js/2.01d45083.chunk.js",
+    "static/css/main.d590b820.chunk.css",
+    "static/js/main.a1ae876a.chunk.js"
+  ]
+}
