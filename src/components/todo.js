@@ -10,7 +10,6 @@ import './sortingVisualizer.css';
 
 import { Nav, Container, Row, Col } from 'react-bootstrap';
 import { set } from 'animejs';
-// import { AnimationMixer } from 'three';
 
 // Change this value for the speed of the animations.
 const ANIMATION_SPEED_MS = 10;
