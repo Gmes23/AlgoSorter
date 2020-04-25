@@ -6,3 +6,6 @@ TODO: create layout and other sorting algos
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+
+add this to npm start before deployment
+    "node server.js"

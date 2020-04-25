@@ -24,6 +24,36 @@ const PRIMARY_COLOR = 'rgb(${value}, 12, 54)';
 const SECONDARY_COLOR = 'rgb(${value}, 12, 54)';
 
 
+function RenderCircles({ array }) {
+
+
+
+
+
+
+  return (
+    <div>
+      {array.map((value, id) => (
+        <div
+          className="array-circle"
+          key={id}
+          value={value}
+          style={{
+            backgroundColor: `rgb(${value}, 206, 133)`,
+            // height: `${value}px`,
+            position: 'relative',
+            top: '20%',
+            width: '43px',
+            height: '43px',
+            borderColor: 'white',
+          }}>
+        </div>
+      ))
+      }
+    </div>
+  )
+}
+
 function appReducer(state, action) {
   switch (action.type) {
     case 'resetArray': {
@@ -64,17 +94,19 @@ export default function TodosApp() {
     // while(elements.length > 0){
     //     elements[0].parentNode.removeChild(elements[0]);
     // }
-  //  var el = document.getElementsByClassName('moon');
-  //  if(el) {el.remove()}
-  // console.log(el.remove() , 'el')
-  // reset state use google
-    setArray([])
-
+    //  var el = document.getElementsByClassName('moon');
+    //  if(el) {el.remove()}
+    // console.log(el.remove() , 'el')
+    // reset state use google
+    // setArray([])
+    console.log(array, 'reset array')
     const placeholderArray = new Array(NUMBER_OF_ARRAY_CIRCLES);
     for (let i = 0; i < NUMBER_OF_ARRAY_CIRCLES; i++) {
-      placeholderArray[i] = randomIntFromInterval(1, 255);
+      placeholderArray[i] = randomIntFromInterval(10, 255);
     }
     setArray(placeholderArray)
+
+
     console.log(array)
   }
 
@@ -91,7 +123,7 @@ export default function TodosApp() {
       const isColorChange = i % 3 !== 2;
       if (isColorChange) {
         const [barOneIdx, barTwoIdx] = animations[i];
-        console.log([barOneIdx, barTwoIdx] , ' [barOneIdx, barTwoIdx] ')
+        console.log([barOneIdx, barTwoIdx], ' [barOneIdx, barTwoIdx] ')
         const barOneStyle = arrayBars[barOneIdx].style;
         const barTwoStyle = arrayBars[barTwoIdx].style;
         const color = i % 3 === 0 ? `rgb(${barTwoIdx}, 206, 133)` : `rgb(${barOneIdx}, 206, 133)`;
@@ -109,7 +141,7 @@ export default function TodosApp() {
         }, i * ANIMATION_SPEED_MS);
       } else {
         setTimeout(() => {
-          const [barOneIdx, newColor ] = animations[i];
+          const [barOneIdx, newColor] = animations[i];
           console.log(animations[i], 'animations[i]')
 
           const barOneStyle = arrayBars[barOneIdx].style;
@@ -125,7 +157,7 @@ export default function TodosApp() {
     console.log(array, 'array')
     const animations = getBubbleSortAnimations(array);
     console.log(array, 'array')
-    console.log(animations , 'animations ')
+    console.log(animations, 'animations ')
 
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-circle');
@@ -150,7 +182,7 @@ export default function TodosApp() {
         }, i * ANIMATION_SPEED_MS);
       } else {
         setTimeout(() => {
-          const [barOneIdx, newColor, barTwoIdx, newColor2 ] = animations[i];
+          const [barOneIdx, newColor, barTwoIdx, newColor2] = animations[i];
           console.log(animations[i], 'xx  animations[i]')
 
           const barOneStyle = arrayBars[barOneIdx].style;
@@ -186,7 +218,7 @@ export default function TodosApp() {
         const [barOneIdx, barTwoIdx] = animations[i];
         const barOneStyle = arrayBars[barOneIdx].style;
         const barTwoStyle = arrayBars[barTwoIdx].style;
-        const color = i % 3 === 0 ? barOneStyle.backgroundColor : barTwoStyle.backgroundColor ;
+        const color = i % 3 === 0 ? barOneStyle.backgroundColor : barTwoStyle.backgroundColor;
         const border = i % 3 === 0 ? `solid` : `solid`;
         const borderColor = i % 3 === 0 ? `red` : `blue`;
 
@@ -201,7 +233,7 @@ export default function TodosApp() {
         }, i * ANIMATION_SPEED_MS);
       } else {
         setTimeout(() => {
-          const [barOneIdx, newColor, barTwoIdx, newColor2 ] = animations[i];
+          const [barOneIdx, newColor, barTwoIdx, newColor2] = animations[i];
           console.log(animations[i], 'xx  animations[i]')
 
           const barOneStyle = arrayBars[barOneIdx].style;
@@ -235,7 +267,7 @@ export default function TodosApp() {
 
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-circle');
-      
+
       // console.log(arrayBars, 'arraybars ')
 
       const isColorChange = i % 3 !== 2;
@@ -243,7 +275,7 @@ export default function TodosApp() {
         const [barOneIdx, barTwoIdx] = animations[i];
         const barOneStyle = arrayBars[barOneIdx].style;
         const barTwoStyle = arrayBars[barTwoIdx].style;
-        const color = i % 3 === 0 ? barOneStyle.backgroundColor : barTwoStyle.backgroundColor ;
+        const color = i % 3 === 0 ? barOneStyle.backgroundColor : barTwoStyle.backgroundColor;
 
         const border = i % 3 === 0 ? `solid` : `solid`;
         const borderColor = i % 3 === 0 ? `red` : `blue`;
@@ -259,7 +291,7 @@ export default function TodosApp() {
         }, i * ANIMATION_SPEED_MS);
       } else {
         setTimeout(() => {
-          const [barOneIdx, newColor, barTwoIdx, newColor2 ] = animations[i];
+          const [barOneIdx, newColor, barTwoIdx, newColor2] = animations[i];
           console.log(animations[i], 'xx  animations[i]')
 
           const barOneStyle = arrayBars[barOneIdx].style;
@@ -280,9 +312,9 @@ export default function TodosApp() {
       }
     }
   }
-
+  
   useEffect(() => {
-    var circleEffect = new MoonMap('#center', {
+     new MoonMap('#center', {
       moonSelector: '.array-circle',
       // This changes the radius of the overall circle
       radius: 220
@@ -302,7 +334,7 @@ export default function TodosApp() {
     //   cx.translate(300, 0);
     //   branch(60, 0.5, 0.8);
     // circleEffect.startCarousel(150);
-  })
+  }, [])
 
   return (
     <div>
@@ -313,12 +345,12 @@ export default function TodosApp() {
           <Container fluid>
             <Row>
               <Col>
-        <div className="gm-logo"> 
-        <h1 className="gm-font gm-font-logo ">  Algo Sorter </h1>
-        </div>
+                <div className="gm-logo">
+                  <h1 className="gm-font gm-font-logo ">  Algo Sorter </h1>
+                </div>
 
                 <Nav className="justify-content-end" as="ul">
-                  
+
                   <Nav.Item as="li">
                     <Nav.Link>
                       <button
@@ -380,16 +412,19 @@ export default function TodosApp() {
             </Row>
           </Container>
         </div>
-        </div>
-        {/* MAIN BODY  */}
+      </div>
+      {/* MAIN BODY  */}
       <div className="gm-body">
-          <div className="container">
-            <div className="row">
-              <div className="col-sm">
+        <div className="container">
+          <div className="row">
+            <div className="col-sm">
             </div>
 
-              <div className="col-sm">
-                <div className="array-container">
+            <div className="col-sm">
+              <div className="array-container">
+
+                <RenderCircles array={array} />
+                {/* 
                   {array.map((value, id) => (
                     <div
                       className="array-circle"
@@ -405,27 +440,30 @@ export default function TodosApp() {
                         borderColor: 'white',
                       }}>
                     </div>
-                  ))}
-                  <div>
-                    <div id="center" className="orbit-center">
-                      <span className="gm-font"> π </span>
-                    </div>
+                  ))} */}
+
+
+
+                <div>
+                  <div id="center" className="orbit-center">
+                    <span className="gm-font"> π </span>
                   </div>
                 </div>
               </div>
-
-              <div className="col-sm">
             </div>
+
+            <div className="col-sm">
             </div>
           </div>
         </div>
+      </div>
 
-      
+
 
       {/*  FOOTER  */}
       <div className="gm-footer">
         <h3 className="gm-font"> 255 </h3>
-         <canvas className="gm-canvas" width="600" height="300"></canvas>
+        <canvas className="gm-canvas" width="600" height="300"></canvas>
       </div>
     </div>
   )
