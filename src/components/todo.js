@@ -15,7 +15,7 @@ import { set } from 'animejs';
 const ANIMATION_SPEED_MS = 10;
 
 // Change this value for the number of circles (value) in the array.
-const NUMBER_OF_ARRAY_CIRCLES = 40;
+const NUMBER_OF_ARRAY_CIRCLES = 5;
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = 'rgb(${value}, 12, 54)';
@@ -25,12 +25,6 @@ const SECONDARY_COLOR = 'rgb(${value}, 12, 54)';
 
 
 function RenderCircles({ array }) {
-
-
-
-
-
-
   return (
     <div>
       {array.map((value, id) => (
@@ -43,8 +37,8 @@ function RenderCircles({ array }) {
             // height: `${value}px`,
             position: 'relative',
             top: '20%',
-            width: '43px',
-            height: '43px',
+            width: '40px',
+            height: '40px',
             borderColor: 'white',
           }}>
         </div>
@@ -54,62 +48,17 @@ function RenderCircles({ array }) {
   )
 }
 
-function appReducer(state, action) {
-  switch (action.type) {
-    case 'resetArray': {
-      return [
-        ...state,
-        testFunction(),
-      ];
-    }
-    case 'mergeSort': {
-      return [
-        ...state,
-        testFunction(),
-      ];
-    }
-    default:
-      break;
-  }
-}
-
-
-
-function testFunction(state, array) {
-  console.log(state)
-}
 
 export default function TodosApp() {
-  const [state, dispatch] = useReducer(appReducer, [])
   const [array, setArray] = useState([]);
 
   function handleReset() {
-    /*
-      This predefines the array size
-      const placeholderArray = new Array(NUMBER_OF_ARRAY_CIRCLES);
-      makes the array that size
-      new Array(5) == [undefined, undefined, undefined, undefined, undefined]
-    */
-    // var elements = document.getElementsByClassName('moon');
-    // while(elements.length > 0){
-    //     elements[0].parentNode.removeChild(elements[0]);
-    // }
-    //  var el = document.getElementsByClassName('moon');
-    //  if(el) {el.remove()}
-    // console.log(el.remove() , 'el')
-    // reset state use google
-    // setArray([])
-    console.log(array, 'reset array')
-    const placeholderArray = new Array(NUMBER_OF_ARRAY_CIRCLES);
-    for (let i = 0; i < NUMBER_OF_ARRAY_CIRCLES; i++) {
-      placeholderArray[i] = randomIntFromInterval(10, 255);
-    }
-    setArray(placeholderArray)
-
-
+    const placeholderArray = Array.from({ length: NUMBER_OF_ARRAY_CIRCLES }, () => randomIntFromInterval(10, 255));
+    setArray(placeholderArray);    
     console.log(array)
   }
-
+  
+  // useEffect((array) => RenderCircles(array))
 
   function mergeSort() {
     console.log(array)
@@ -128,7 +77,7 @@ export default function TodosApp() {
         const barTwoStyle = arrayBars[barTwoIdx].style;
         const color = i % 3 === 0 ? `rgb(${barTwoIdx}, 206, 133)` : `rgb(${barOneIdx}, 206, 133)`;
         const border = i % 3 === 0 ? `solid` : `solid`;
-        const borderColor = i % 3 === 0 ? `red` : `blue`;
+        const borderColor = i % 3 === 0 ? `white` : `#0057ff`;
 
 
         setTimeout(() => {
@@ -169,7 +118,7 @@ export default function TodosApp() {
         const barTwoStyle = arrayBars[barTwoIdx].style;
         const color = i % 3 === 0 ? barOneStyle.backgroundColor : barTwoStyle.backgroundColor;
         const border = i % 3 === 0 ? `solid` : `solid`;
-        const borderColor = i % 3 === 0 ? `red` : `blue`;
+        const borderColor = i % 3 === 0 ? `white` : `#0057ff`;
 
 
         setTimeout(() => {
@@ -220,7 +169,7 @@ export default function TodosApp() {
         const barTwoStyle = arrayBars[barTwoIdx].style;
         const color = i % 3 === 0 ? barOneStyle.backgroundColor : barTwoStyle.backgroundColor;
         const border = i % 3 === 0 ? `solid` : `solid`;
-        const borderColor = i % 3 === 0 ? `red` : `blue`;
+        const borderColor = i % 3 === 0 ? `white` : `#0057ff`;
 
 
         setTimeout(() => {
@@ -278,7 +227,7 @@ export default function TodosApp() {
         const color = i % 3 === 0 ? barOneStyle.backgroundColor : barTwoStyle.backgroundColor;
 
         const border = i % 3 === 0 ? `solid` : `solid`;
-        const borderColor = i % 3 === 0 ? `red` : `blue`;
+        const borderColor = i % 3 === 0 ? `white` : `#0057ff`;
 
 
         setTimeout(() => {
@@ -313,12 +262,15 @@ export default function TodosApp() {
     }
   }
   
+
+
+
   useEffect(() => {
-     new MoonMap('#center', {
-      moonSelector: '.array-circle',
-      // This changes the radius of the overall circle
-      radius: 220
-    });
+    new MoonMap('#center', {
+     moonSelector: '.array-circle',
+     // This changes the radius of the overall circle
+     radius: 220
+   });
 
     // This is for binary tree display
     // let cx = document.querySelector("canvas").getContext("2d"); 
@@ -334,7 +286,7 @@ export default function TodosApp() {
     //   cx.translate(300, 0);
     //   branch(60, 0.5, 0.8);
     // circleEffect.startCarousel(150);
-  }, [])
+  },[array])
 
   return (
     <div>
@@ -442,8 +394,6 @@ export default function TodosApp() {
                     </div>
                   ))} */}
 
-
-
                 <div>
                   <div id="center" className="orbit-center">
                     <span className="gm-font"> π </span>
@@ -463,7 +413,7 @@ export default function TodosApp() {
       {/*  FOOTER  */}
       <div className="gm-footer">
         <h3 className="gm-font"> 255 </h3>
-        <canvas className="gm-canvas" width="600" height="300"></canvas>
+        {/* <canvas className="gm-canvas" width="600" height="300"></canvas> */}
       </div>
     </div>
   )
