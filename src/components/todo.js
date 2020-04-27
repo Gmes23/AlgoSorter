@@ -1,84 +1,78 @@
-import React, { useReducer, useState, useEffect } from 'react';
-import { getMergeSortAnimations } from './mergeSort.js';
-import { getBubbleSortAnimations } from './bubbleSort.js';
-import { getQuickSortAnimations } from './quickSort2.js';
-import { getMaxHeapAnimations } from './heapSort.js';
+import React, { useReducer, useState, useEffect, useRef } from "react";
+import { getMergeSortAnimations } from "./mergeSort.js";
+import { getBubbleSortAnimations } from "./bubbleSort.js";
+import { getQuickSortAnimations } from "./quickSort2.js";
+import { getMaxHeapAnimations } from "./heapSort.js";
 
+import "./sortingVisualizer.css";
 
-
-import './sortingVisualizer.css';
-
-import { Nav, Container, Row, Col } from 'react-bootstrap';
-import { set } from 'animejs';
+import { Nav, Container, Row, Col } from "react-bootstrap";
+import { set } from "animejs";
 
 // Change this value for the speed of the animations.
 const ANIMATION_SPEED_MS = 10;
 
 // Change this value for the number of circles (value) in the array.
-const NUMBER_OF_ARRAY_CIRCLES = 5;
+const NUMBER_OF_ARRAY_CIRCLES = 50;
 
 // This is the main color of the array bars.
-const PRIMARY_COLOR = 'rgb(${value}, 12, 54)';
+const PRIMARY_COLOR = "rgb(${value}, 12, 54)";
 
 // This is the color of array bars that are being compared throughout the animations.
-const SECONDARY_COLOR = 'rgb(${value}, 12, 54)';
-
+const SECONDARY_COLOR = "rgb(${value}, 12, 54)";
 
 function RenderCircles({ array }) {
+  console.log("Rendering circles with array:", array);
   return (
     <div>
-      {array.map((value, id) => (
+      {array.map((value, idx) => (
         <div
           className="array-circle"
-          key={id}
           value={value}
           style={{
             backgroundColor: `rgb(${value}, 206, 133)`,
             // height: `${value}px`,
-            position: 'relative',
-            top: '20%',
-            width: '40px',
-            height: '40px',
-            borderColor: 'white',
-          }}>
-        </div>
-      ))
-      }
+            position: "relative",
+            top: "20%",
+            width: "40px",
+            height: "40px",
+            borderColor: "white"
+          }}
+        />
+      ))}
     </div>
-  )
+  );
 }
 
-
 export default function TodosApp() {
-  const [array, setArray] = useState([]);
+  const makeCircles = () =>
+    Array.from({ length: NUMBER_OF_ARRAY_CIRCLES }, () =>
+      randomIntFromInterval(10, 255)
+    );
+
+  const [array, setArray] = useState(makeCircles());
 
   function handleReset() {
-    const placeholderArray = Array.from({ length: NUMBER_OF_ARRAY_CIRCLES }, () => randomIntFromInterval(10, 255));
-    setArray(placeholderArray);    
-    console.log(array)
+    const newCircles = makeCircles();
+    setArray(newCircles);
   }
-  
-  // useEffect((array) => RenderCircles(array))
 
   function mergeSort() {
-    console.log(array)
-
     const animations = getMergeSortAnimations(array);
-    console.log(array)
 
-    console.log(animations, ' animations')
     for (let i = 0; i < animations.length; i++) {
-      const arrayBars = document.getElementsByClassName('array-circle');
+      const arrayBars = document.getElementsByClassName("array-circle");
       const isColorChange = i % 3 !== 2;
       if (isColorChange) {
         const [barOneIdx, barTwoIdx] = animations[i];
-        console.log([barOneIdx, barTwoIdx], ' [barOneIdx, barTwoIdx] ')
         const barOneStyle = arrayBars[barOneIdx].style;
         const barTwoStyle = arrayBars[barTwoIdx].style;
-        const color = i % 3 === 0 ? `rgb(${barTwoIdx}, 206, 133)` : `rgb(${barOneIdx}, 206, 133)`;
+        const color =
+          i % 3 === 0
+            ? `rgb(${barTwoIdx}, 206, 133)`
+            : `rgb(${barOneIdx}, 206, 133)`;
         const border = i % 3 === 0 ? `solid` : `solid`;
         const borderColor = i % 3 === 0 ? `white` : `#0057ff`;
-
 
         setTimeout(() => {
           barOneStyle.backgroundColor = color;
@@ -91,11 +85,7 @@ export default function TodosApp() {
       } else {
         setTimeout(() => {
           const [barOneIdx, newColor] = animations[i];
-          console.log(animations[i], 'animations[i]')
-
           const barOneStyle = arrayBars[barOneIdx].style;
-          console.log(barOneStyle.backgroundColor, 'barOneStyle.backgroundColor')
-
           barOneStyle.backgroundColor = `rgb(${newColor}, 206, 133)`;
         }, i * ANIMATION_SPEED_MS);
       }
@@ -103,23 +93,25 @@ export default function TodosApp() {
   }
 
   function bubblerSort() {
-    console.log(array, 'array')
+    console.log(array, "array");
     const animations = getBubbleSortAnimations(array);
-    console.log(array, 'array')
-    console.log(animations, 'animations ')
+    console.log(array, "array");
+    console.log(animations, "animations ");
 
     for (let i = 0; i < animations.length; i++) {
-      const arrayBars = document.getElementsByClassName('array-circle');
-      console.log(arrayBars, 'arraybars ')
+      const arrayBars = document.getElementsByClassName("array-circle");
+      console.log(arrayBars, "arraybars ");
       const isColorChange = i % 3 !== 2;
       if (isColorChange) {
         const [barOneIdx, barTwoIdx] = animations[i];
         const barOneStyle = arrayBars[barOneIdx].style;
         const barTwoStyle = arrayBars[barTwoIdx].style;
-        const color = i % 3 === 0 ? barOneStyle.backgroundColor : barTwoStyle.backgroundColor;
+        const color =
+          i % 3 === 0
+            ? barOneStyle.backgroundColor
+            : barTwoStyle.backgroundColor;
         const border = i % 3 === 0 ? `solid` : `solid`;
         const borderColor = i % 3 === 0 ? `white` : `#0057ff`;
-
 
         setTimeout(() => {
           barOneStyle.backgroundColor = color;
@@ -132,45 +124,56 @@ export default function TodosApp() {
       } else {
         setTimeout(() => {
           const [barOneIdx, newColor, barTwoIdx, newColor2] = animations[i];
-          console.log(animations[i], 'xx  animations[i]')
+          console.log(animations[i], "xx  animations[i]");
 
           const barOneStyle = arrayBars[barOneIdx].style;
-          console.log(barOneStyle.backgroundColor, 'barOneStyle.backgroundColor')
+          console.log(
+            barOneStyle.backgroundColor,
+            "barOneStyle.backgroundColor"
+          );
 
           barOneStyle.backgroundColor = `rgb(${newColor}, 206, 133)`;
-          console.log(barOneStyle.backgroundColor, 'barOneStyle.backgroundColor')
-
-
+          console.log(
+            barOneStyle.backgroundColor,
+            "barOneStyle.backgroundColor"
+          );
 
           const barTwoStyle = arrayBars[barTwoIdx].style;
-          console.log(barTwoStyle.backgroundColor, 'barTwostyle.backgroundColor')
+          console.log(
+            barTwoStyle.backgroundColor,
+            "barTwostyle.backgroundColor"
+          );
 
           barTwoStyle.backgroundColor = `rgb(${newColor2}, 206, 133)`;
-          console.log(barOneStyle.backgroundColor, 'barTwoStyle.backgroundColor')
-
+          console.log(
+            barOneStyle.backgroundColor,
+            "barTwoStyle.backgroundColor"
+          );
         }, i * ANIMATION_SPEED_MS);
       }
     }
   }
 
   function quickSort() {
-    console.log(array, 'array');
+    console.log(array, "array");
     const animations = getQuickSortAnimations(array);
-    console.log(animations, 'animations')
-    console.log(array, 'array after');
+    console.log(animations, "animations");
+    console.log(array, "array after");
 
     for (let i = 0; i < animations.length; i++) {
-      const arrayBars = document.getElementsByClassName('array-circle');
-      console.log(arrayBars, 'arraybars ')
+      const arrayBars = document.getElementsByClassName("array-circle");
+      console.log(arrayBars, "arraybars ");
       const isColorChange = i % 3 !== 2;
       if (isColorChange) {
         const [barOneIdx, barTwoIdx] = animations[i];
         const barOneStyle = arrayBars[barOneIdx].style;
         const barTwoStyle = arrayBars[barTwoIdx].style;
-        const color = i % 3 === 0 ? barOneStyle.backgroundColor : barTwoStyle.backgroundColor;
+        const color =
+          i % 3 === 0
+            ? barOneStyle.backgroundColor
+            : barTwoStyle.backgroundColor;
         const border = i % 3 === 0 ? `solid` : `solid`;
         const borderColor = i % 3 === 0 ? `white` : `#0057ff`;
-
 
         setTimeout(() => {
           barOneStyle.backgroundColor = color;
@@ -183,39 +186,45 @@ export default function TodosApp() {
       } else {
         setTimeout(() => {
           const [barOneIdx, newColor, barTwoIdx, newColor2] = animations[i];
-          console.log(animations[i], 'xx  animations[i]')
+          console.log(animations[i], "xx  animations[i]");
 
           const barOneStyle = arrayBars[barOneIdx].style;
-          console.log(barOneStyle.backgroundColor, 'barOneStyle.backgroundColor')
+          console.log(
+            barOneStyle.backgroundColor,
+            "barOneStyle.backgroundColor"
+          );
 
           barOneStyle.backgroundColor = `rgb(${newColor}, 206, 133)`;
-          console.log(barOneStyle.backgroundColor, 'barOneStyle.backgroundColor')
-
-
+          console.log(
+            barOneStyle.backgroundColor,
+            "barOneStyle.backgroundColor"
+          );
 
           const barTwoStyle = arrayBars[barTwoIdx].style;
-          console.log(barTwoStyle.backgroundColor, 'barTwostyle.backgroundColor')
+          console.log(
+            barTwoStyle.backgroundColor,
+            "barTwostyle.backgroundColor"
+          );
 
           barTwoStyle.backgroundColor = `rgb(${newColor2}, 206, 133)`;
-          console.log(barOneStyle.backgroundColor, 'barTwoStyle.backgroundColor')
-
+          console.log(
+            barOneStyle.backgroundColor,
+            "barTwoStyle.backgroundColor"
+          );
         }, i * ANIMATION_SPEED_MS);
       }
     }
   }
 
-
   function heapSort() {
-
-    console.log(array, 'array')
+    console.log(array, "array");
 
     const animations = getMaxHeapAnimations(array);
-    console.log(animations)
-    console.log(array, 'array after')
-
+    console.log(animations);
+    console.log(array, "array after");
 
     for (let i = 0; i < animations.length; i++) {
-      const arrayBars = document.getElementsByClassName('array-circle');
+      const arrayBars = document.getElementsByClassName("array-circle");
 
       // console.log(arrayBars, 'arraybars ')
 
@@ -224,11 +233,13 @@ export default function TodosApp() {
         const [barOneIdx, barTwoIdx] = animations[i];
         const barOneStyle = arrayBars[barOneIdx].style;
         const barTwoStyle = arrayBars[barTwoIdx].style;
-        const color = i % 3 === 0 ? barOneStyle.backgroundColor : barTwoStyle.backgroundColor;
+        const color =
+          i % 3 === 0
+            ? barOneStyle.backgroundColor
+            : barTwoStyle.backgroundColor;
 
         const border = i % 3 === 0 ? `solid` : `solid`;
         const borderColor = i % 3 === 0 ? `white` : `#0057ff`;
-
 
         setTimeout(() => {
           barOneStyle.backgroundColor = color;
@@ -241,124 +252,112 @@ export default function TodosApp() {
       } else {
         setTimeout(() => {
           const [barOneIdx, newColor, barTwoIdx, newColor2] = animations[i];
-          console.log(animations[i], 'xx  animations[i]')
+          console.log(animations[i], "xx  animations[i]");
 
           const barOneStyle = arrayBars[barOneIdx].style;
-          console.log(barOneStyle.backgroundColor, 'barOneStyle.backgroundColor')
+          console.log(
+            barOneStyle.backgroundColor,
+            "barOneStyle.backgroundColor"
+          );
 
           barOneStyle.backgroundColor = `rgb(${newColor}, 206, 133)`;
-          console.log(barOneStyle.backgroundColor, 'barOneStyle.backgroundColor')
-
-
+          console.log(
+            barOneStyle.backgroundColor,
+            "barOneStyle.backgroundColor"
+          );
 
           const barTwoStyle = arrayBars[barTwoIdx].style;
-          console.log(barTwoStyle.backgroundColor, 'barTwostyle.backgroundColor')
+          console.log(
+            barTwoStyle.backgroundColor,
+            "barTwostyle.backgroundColor"
+          );
 
           barTwoStyle.backgroundColor = `rgb(${newColor2}, 206, 133)`;
-          console.log(barOneStyle.backgroundColor, 'barTwoStyle.backgroundColor')
-
+          console.log(
+            barOneStyle.backgroundColor,
+            "barTwoStyle.backgroundColor"
+          );
         }, i * ANIMATION_SPEED_MS);
       }
     }
   }
-  
 
+  // useEffect(() => {
+  //   document.querySelector("#center").innerHTML = "";
+  //   new MoonMap("#center", {
+  //     moonSelector: ".array-circle",
+  //     // This changes the radius of the overall circle
+  //     radius: 220
+  //   });
 
-
-  useEffect(() => {
-    new MoonMap('#center', {
-     moonSelector: '.array-circle',
-     // This changes the radius of the overall circle
-     radius: 220
-   });
-
-    // This is for binary tree display
-    // let cx = document.querySelector("canvas").getContext("2d"); 
-    // function branch(length, angle, scale) {
-    //   cx.fillRect(0, 0, 1, length);
-    //   if (length < 8) return;
-    //   cx.save();
-    //   cx.translate(0, length); cx.rotate(-angle);
-    //   branch(length * scale, angle, scale); cx.rotate(2 * angle);
-    //   branch(length * scale, angle, scale);
-    //   cx.restore(); 
-    // }
-    //   cx.translate(300, 0);
-    //   branch(60, 0.5, 0.8);
-    // circleEffect.startCarousel(150);
-  },[array])
+  //   // This is for binary tree display
+  //   // let cx = document.querySelector("canvas").getContext("2d");
+  //   // function branch(length, angle, scale) {
+  //   //   cx.fillRect(0, 0, 1, length);
+  //   //   if (length < 8) return;
+  //   //   cx.save();
+  //   //   cx.translate(0, length); cx.rotate(-angle);
+  //   //   branch(length * scale, angle, scale); cx.rotate(2 * angle);
+  //   //   branch(length * scale, angle, scale);
+  //   //   cx.restore();
+  //   // }
+  //   //   cx.translate(300, 0);
+  //   //   branch(60, 0.5, 0.8);
+  //   // circleEffect.startCarousel(150);
+  // }, [array]);
 
   return (
     <div>
       {/*  Header */}
       <div className="gm-header">
         <div className="container-fluid">
-
           <Container fluid>
             <Row>
               <Col>
                 <div className="gm-logo">
-                  <h1 className="gm-font gm-font-logo ">  Algo Sorter </h1>
+                  <h1 className="gm-font gm-font-logo "> Algo Sorter </h1>
                 </div>
 
                 <Nav className="justify-content-end" as="ul">
-
                   <Nav.Item as="li">
                     <Nav.Link>
-                      <button
-                        className="gm-font"
-                        onClick={() => handleReset()}
-                      >
+                      <button className="gm-font" onClick={() => handleReset()}>
                         Reset
-              </button>
+                      </button>
                     </Nav.Link>
                   </Nav.Item>
 
                   <Nav.Item as="li">
                     <Nav.Link eventKey="link-1">
-                      <button
-                        className="gm-font"
-                        onClick={() => mergeSort()}
-                      >
+                      <button className="gm-font" onClick={() => mergeSort()}>
                         Merge Sort
-              </button>
+                      </button>
                     </Nav.Link>
                   </Nav.Item>
 
                   <Nav.Item as="li">
                     <Nav.Link eventKey="link-2">
-                      <button
-                        className="gm-font"
-                        onClick={() => bubblerSort()}
-                      >
+                      <button className="gm-font" onClick={() => bubblerSort()}>
                         Bubble Sort
-              </button>
+                      </button>
                     </Nav.Link>
                   </Nav.Item>
 
                   <Nav.Item as="li">
                     <Nav.Link eventKey="link-3">
-                      <button
-                        className="gm-font"
-                        onClick={() => heapSort()}
-                      >
+                      <button className="gm-font" onClick={() => heapSort()}>
                         Heap Sort
-              </button>
+                      </button>
                     </Nav.Link>
                   </Nav.Item>
-
 
                   <Nav.Item as="li">
                     <Nav.Link eventKey="link-4">
-                      <button
-                        className="gm-font"
-                        onClick={() => quickSort()}
-                      >
+                      <button className="gm-font" onClick={() => quickSort()}>
                         Quick Sort
-              </button>
+                      </button>
                     </Nav.Link>
                   </Nav.Item>
-
                 </Nav>
               </Col>
             </Row>
@@ -369,30 +368,11 @@ export default function TodosApp() {
       <div className="gm-body">
         <div className="container">
           <div className="row">
-            <div className="col-sm">
-            </div>
+            <div className="col-sm" />
 
             <div className="col-sm">
               <div className="array-container">
-
-                <RenderCircles array={array} />
-                {/* 
-                  {array.map((value, id) => (
-                    <div
-                      className="array-circle"
-                      key={id}
-                      value={value}
-                      style={{
-                        backgroundColor: `rgb(${value}, 206, 133)`,
-                        // height: `${value}px`,
-                        position: 'relative',
-                        top: '20%',
-                        width: '43px',
-                        height: '43px',
-                        borderColor: 'white',
-                      }}>
-                    </div>
-                  ))} */}
+                {array.map(value => Circle({ idx: value }))}
 
                 <div>
                   <div id="center" className="orbit-center">
@@ -402,13 +382,10 @@ export default function TodosApp() {
               </div>
             </div>
 
-            <div className="col-sm">
-            </div>
+            <div className="col-sm" />
           </div>
         </div>
       </div>
-
-
 
       {/*  FOOTER  */}
       <div className="gm-footer">
@@ -416,11 +393,8 @@ export default function TodosApp() {
         {/* <canvas className="gm-canvas" width="600" height="300"></canvas> */}
       </div>
     </div>
-  )
+  );
 }
-
-
-
 
 // From https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
 function randomIntFromInterval(min, max) {
@@ -428,7 +402,7 @@ function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-// Not working 
+// Not working
 function arraysAreEqual(arrayOne, arrayTwo) {
   if (arrayOne.length !== arrayTwo.length) return false;
   for (let i = 0; i < arrayOne.length; i++) {
@@ -439,255 +413,348 @@ function arraysAreEqual(arrayOne, arrayTwo) {
   return true;
 }
 
-
-
-var MoonMap = function (querySelector, options) {
-
-  // keep track of the moons we've added
-  this.moons = [];
-
-  this.lastRotation = 0;
-  this.selector = querySelector;
-
-  // keep track of the currently active moon
-  this.currentlyActive = -1;
-
-  if (typeof options !== 'object')
-    options = {};
-
-  var defaults = {
-    active: function () { }, // active event
-    activeClass: 'active',
-    content: '',
+function Circle({ value, idx }) {
+  const options = {
+    activeClass: "active",
+    content: "",
     degrees: 360,
     // This changes the width of the circle, increase to make the circle bigger
-    margin: 100,
-    moonClass: 'moon',
+    margin: 20,
+    moonClass: "moon",
     n: 12,
-    radius: false,
+    radius: 150,
     removeOriginal: true,
     startAngle: 90
   };
 
-  // Define the method for merging options
-  this.extend = function (a, b) {
-    for (var key in b) {
-      if (b.hasOwnProperty(key)) {
-        a[key] = b[key];
-      }
-    }
-    return a;
-  }
+  const targetRef = useRef();
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
-  // Make sure a querySelector was defined
-  if (typeof querySelector == 'undefined') {
-    console.error('No query selector was provided to the MoonMap constructor');
-    return;
-  }
-
-  var element = document.querySelector(querySelector);
-  this.options = this.extend(defaults, options);
-  this.map = element;
-
-  this.makeAbsolute = function (str) {
-    return '<div style="position:relative"><div className="_moon_content" style="position:absolute;width:100%;height:100%">' + str + '</div></div>';
-  }
-  console.log(element, 'element ')
-
-  if (!this.options.radius)
-    this.options.radius = element.offsetWidth + this.options.margin;
-
-  // Calculate the offsets
-  var offsetToParentCenter = parseInt(element.offsetWidth / 2);  //assumes parent is square
-
-  // Append the moons
-  if (typeof this.options['moonSelector'] !== 'undefined') {
-
-    // moons are defined in the DOM
-    var moons = document.querySelectorAll(this.options['moonSelector']),
-      n = moons.length,
-      div = 360 / n,
-      angle = 360 - this.options.startAngle;
-
-    for (var i = 0; i < n; ++i) {
-
-      var moon = document.createElement('div'),
-        node = moons[i].cloneNode(true),
-        y = Math.sin((angle) * (Math.PI / 180)) * this.options.radius,
-        x = Math.cos((angle) * (Math.PI / 180)) * this.options.radius;
-
-      moon.className = this.options.moonClass;
-      moon.style.position = 'absolute';
-      moon.style.visibility = 'hidden';
-      moon.innerHTML = this.makeAbsolute(node.outerHTML);
-
-      element.appendChild(moon);
-
-      var offsetToChildCenter = moon.offsetWidth / 2,
-        totalOffset = offsetToParentCenter - offsetToChildCenter;
-
-
-      moon.style.top = (y + totalOffset).toString() + "px";
-      moon.style.left = (x + totalOffset).toString() + "px";
-      moon.style.visibility = 'visible';
-
-
-      if (this.options.removeOriginal)
-        moons[i].parentNode.removeChild(moons[i]);
-
-      this.moons.push(moon);
-
-      angle += div;
-    }
-
-
-  } else {
-
-    // moons are NOT defined in the DOM, and are added programmatically
-    var n = this.options.n,
-      div = 360 / n,
-      angle = 360 - this.options.startAngle;
-
-
-    for (var i = 1; i <= this.options.n; ++i) {
-
-      var moon = document.createElement('div'),
-        y = Math.sin((angle) * (Math.PI / 180)) * this.options.radius,
-        x = Math.cos((angle) * (Math.PI / 180)) * this.options.radius;
-
-      moon.className = this.options.moonClass;
-      moon.style.position = 'absolute';
-      moon.style.visibility = 'hidden';
-
-      // check to see if a content setter function was passed in the options
-      if (typeof this.options.content == 'function') {
-
-        moon.innerHTML = this.makeAbsolute(this.options.content(i, moon));
-
-      } else if (this.options.content) {
-
-        moon.innerHTML = this.makeAbsolute(this.options.content);
-      }
-
-      element.appendChild(moon);
-
-      var offsetToChildCenter = moon.offsetWidth / 2,
-        totalOffset = offsetToParentCenter - offsetToChildCenter;
-
-      moon.style.top = (y + totalOffset).toString() + "px";
-      moon.style.left = (x + totalOffset).toString() + "px";
-      moon.style.visibility = 'visible';
-
-
-      this.moons.push(moon);
-
-      angle += div;
-
-    }
-
-  }
-
-  this.moonEvent = function (event, fn) {
-
-    var map = this;
-
-    for (var i = 0; i < this.moons.length; i++) {
-
-      this.moons[i].addEventListener(event, function () {
-
-        fn(this, map);
+  useEffect(() => {
+    if (targetRef.current) {
+      setDimensions({
+        width: targetRef.current.offsetWidth,
+        height: targetRef.current.offsetHeight
       });
-
     }
+  }, []);
 
-  }
+  var offsetToParentCenter = parseInt(dimensions.width / 2); //assumes parent is square
 
-  this.rotateMoons = function (degrees, ms) {
+  const n = options.n;
+  const div = 360 / n;
+  const angle = 360 - options.startAngle;
 
-    if (typeof degrees == 'undefined')
-      degrees = 90;
+  const y = Math.sin((angle + div * idx) * (Math.PI / 180)) * options.radius;
+  const x = Math.cos((angle + div * idx) * (Math.PI / 180)) * options.radius;
 
-    if (typeof ms == 'undefined')
-      ms = 1000;
+  const offsetToChildCenter = dimensions.width / 2;
+  const totalOffset = offsetToParentCenter - offsetToChildCenter;
 
-    var seconds = ms / 1000,
-      prefixes = ['-webkit-', '-moz-', '-o-', '-ms-', ''],
-      newPosition = this.lastRotation + degrees;
-
-    this.lastRotation = degrees;
-
-    for (var k = 0; k < prefixes.length; k++) {
-
-      var prefix = prefixes[k];
-
-      this.map.style[prefix + 'transition'] = 'all ' + seconds + 's ease-in-out';
-      this.map.style[prefix + 'transform'] = 'rotate(' + degrees + 'deg)';
-
-
-
-    }
-
-  }
-
-  this.current = function () {
-
-    return this.currentlyActive;
-  }
-
-  this.next = function () {
-
-    var nextActive = this.currentlyActive + 1;
-
-    if (nextActive > this.moons.length - 1)
-      nextActive = 0;
-
-    return nextActive;
-
-
-  }
-
-  // this.previous = function(){
-
-  // 	prevActive = this.currentlyActive -1;
-
-  // 	if (typeof this.moons[prevActive] == 'undefined')
-  // 		prevActive = this.moons.length-1;
-
-  // 	return prevActive;
-
-
-  // }
-
-  this.startCarousel = function (speed) {
-
-    if (typeof speed == 'undefined')
-      speed = 1200;
-
-    var obj = this,
-      options = this.options;
-
-    setInterval(function () {
-
-      var moons = obj.moons,
-        prevActive = obj.current(),
-        nextActive = obj.next();
-
-      obj.currentlyActive = nextActive;
-
-      // Remove the highlighted class
-      if (typeof moons[prevActive] !== 'undefined')
-        moons[prevActive].className = 'moon';
-
-      // Add the highlighted class to the newly activated element
-      moons[nextActive].className = moons[nextActive].className + ' ' + options.activeClass;
-
-      if (typeof options.active == 'function')
-        options.active(obj);
-
-
-    }, speed);
-
-
-  }
-
+  return (
+    <div
+      class="moon"
+      ref={targetRef}
+      style={{
+        position: "absolute",
+        visibility: "visible",
+        top: (y + totalOffset).toString() + "px",
+        left: (x + totalOffset).toString() + "px"
+      }}
+    >
+      <div style={{ position: "relative" }}>
+        <div
+          classname="_moon_content new"
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%"
+          }}
+        >
+          <div
+            class="array-circle"
+            value="157"
+            style={{
+              backgroundColor: `rgb(${value}, 206, 133)`,
+              position: "relative",
+              top: "20%",
+              width: "40px",
+              height: "40px",
+              "border-color": "white"
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  );
 }
+
+// // From https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
+// function randomIntFromInterval(min, max) {
+//   // min and max included
+//   return Math.floor(Math.random() * (max - min + 1) + min);
+// }
+
+// // Not working 
+// function arraysAreEqual(arrayOne, arrayTwo) {
+//   if (arrayOne.length !== arrayTwo.length) return false;
+//   for (let i = 0; i < arrayOne.length; i++) {
+//     if (arrayOne[i] !== arrayTwo[i]) {
+//       return false;
+//     }
+//   }
+//   return true;
+// }
+
+
+
+// var MoonMap = function (querySelector, options) {
+
+//   // keep track of the moons we've added
+//   this.moons = [];
+
+//   this.lastRotation = 0;
+//   this.selector = querySelector;
+
+//   // keep track of the currently active moon
+//   this.currentlyActive = -1;
+
+//   if (typeof options !== 'object')
+//     options = {};
+
+//   var defaults = {
+//     active: function () { }, // active event
+//     activeClass: 'active',
+//     content: '',
+//     degrees: 360,
+//     // This changes the width of the circle, increase to make the circle bigger
+//     margin: 100,
+//     moonClass: 'moon',
+//     n: 12,
+//     radius: false,
+//     removeOriginal: true,
+//     startAngle: 90
+//   };
+
+//   // Define the method for merging options
+//   this.extend = function (a, b) {
+//     for (var key in b) {
+//       if (b.hasOwnProperty(key)) {
+//         a[key] = b[key];
+//       }
+//     }
+//     return a;
+//   }
+
+//   // Make sure a querySelector was defined
+//   if (typeof querySelector == 'undefined') {
+//     console.error('No query selector was provided to the MoonMap constructor');
+//     return;
+//   }
+
+//   var element = document.querySelector(querySelector);
+//   this.options = this.extend(defaults, options);
+//   this.map = element;
+
+//   this.makeAbsolute = function (str) {
+//     return '<div style="position:relative"><div className="_moon_content" style="position:absolute;width:100%;height:100%">' + str + '</div></div>';
+//   }
+//   console.log(element, 'element ')
+
+//   if (!this.options.radius)
+//     this.options.radius = element.offsetWidth + this.options.margin;
+
+//   // Calculate the offsets
+//   var offsetToParentCenter = parseInt(element.offsetWidth / 2);  //assumes parent is square
+
+//   // Append the moons
+//   if (typeof this.options['moonSelector'] !== 'undefined') {
+
+//     // moons are defined in the DOM
+//     var moons = document.querySelectorAll(this.options['moonSelector']),
+//       n = moons.length,
+//       div = 360 / n,
+//       angle = 360 - this.options.startAngle;
+
+//     for (var i = 0; i < n; ++i) {
+
+//       var moon = document.createElement('div'),
+//         node = moons[i].cloneNode(true),
+//         y = Math.sin((angle) * (Math.PI / 180)) * this.options.radius,
+//         x = Math.cos((angle) * (Math.PI / 180)) * this.options.radius;
+
+//       moon.className = this.options.moonClass;
+//       moon.style.position = 'absolute';
+//       moon.style.visibility = 'hidden';
+//       moon.innerHTML = this.makeAbsolute(node.outerHTML);
+
+//       element.appendChild(moon);
+
+//       var offsetToChildCenter = moon.offsetWidth / 2,
+//         totalOffset = offsetToParentCenter - offsetToChildCenter;
+
+
+//       moon.style.top = (y + totalOffset).toString() + "px";
+//       moon.style.left = (x + totalOffset).toString() + "px";
+//       moon.style.visibility = 'visible';
+
+
+//       if (this.options.removeOriginal)
+//         moons[i].parentNode.removeChild(moons[i]);
+
+//       this.moons.push(moon);
+
+//       angle += div;
+//     }
+
+
+//   } else {
+
+//     // moons are NOT defined in the DOM, and are added programmatically
+//     var n = this.options.n,
+//       div = 360 / n,
+//       angle = 360 - this.options.startAngle;
+
+
+//     for (var i = 1; i <= this.options.n; ++i) {
+
+//       var moon = document.createElement('div'),
+//         y = Math.sin((angle) * (Math.PI / 180)) * this.options.radius,
+//         x = Math.cos((angle) * (Math.PI / 180)) * this.options.radius;
+
+//       moon.className = this.options.moonClass;
+//       moon.style.position = 'absolute';
+//       moon.style.visibility = 'hidden';
+
+//       // check to see if a content setter function was passed in the options
+//       if (typeof this.options.content == 'function') {
+
+//         moon.innerHTML = this.makeAbsolute(this.options.content(i, moon));
+
+//       } else if (this.options.content) {
+
+//         moon.innerHTML = this.makeAbsolute(this.options.content);
+//       }
+
+//       element.appendChild(moon);
+
+//       var offsetToChildCenter = moon.offsetWidth / 2,
+//         totalOffset = offsetToParentCenter - offsetToChildCenter;
+
+//       moon.style.top = (y + totalOffset).toString() + "px";
+//       moon.style.left = (x + totalOffset).toString() + "px";
+//       moon.style.visibility = 'visible';
+
+
+//       this.moons.push(moon);
+
+//       angle += div;
+
+//     }
+
+//   }
+
+//   this.moonEvent = function (event, fn) {
+
+//     var map = this;
+
+//     for (var i = 0; i < this.moons.length; i++) {
+
+//       this.moons[i].addEventListener(event, function () {
+
+//         fn(this, map);
+//       });
+
+//     }
+
+//   }
+
+//   this.rotateMoons = function (degrees, ms) {
+
+//     if (typeof degrees == 'undefined')
+//       degrees = 90;
+
+//     if (typeof ms == 'undefined')
+//       ms = 1000;
+
+//     var seconds = ms / 1000,
+//       prefixes = ['-webkit-', '-moz-', '-o-', '-ms-', ''],
+//       newPosition = this.lastRotation + degrees;
+
+//     this.lastRotation = degrees;
+
+//     for (var k = 0; k < prefixes.length; k++) {
+
+//       var prefix = prefixes[k];
+
+//       this.map.style[prefix + 'transition'] = 'all ' + seconds + 's ease-in-out';
+//       this.map.style[prefix + 'transform'] = 'rotate(' + degrees + 'deg)';
+
+
+
+//     }
+
+//   }
+
+//   this.current = function () {
+
+//     return this.currentlyActive;
+//   }
+
+//   this.next = function () {
+
+//     var nextActive = this.currentlyActive + 1;
+
+//     if (nextActive > this.moons.length - 1)
+//       nextActive = 0;
+
+//     return nextActive;
+
+
+//   }
+
+//   // this.previous = function(){
+
+//   // 	prevActive = this.currentlyActive -1;
+
+//   // 	if (typeof this.moons[prevActive] == 'undefined')
+//   // 		prevActive = this.moons.length-1;
+
+//   // 	return prevActive;
+
+
+//   // }
+
+//   this.startCarousel = function (speed) {
+
+//     if (typeof speed == 'undefined')
+//       speed = 1200;
+
+//     var obj = this,
+//       options = this.options;
+
+//     setInterval(function () {
+
+//       var moons = obj.moons,
+//         prevActive = obj.current(),
+//         nextActive = obj.next();
+
+//       obj.currentlyActive = nextActive;
+
+//       // Remove the highlighted class
+//       if (typeof moons[prevActive] !== 'undefined')
+//         moons[prevActive].className = 'moon';
+
+//       // Add the highlighted class to the newly activated element
+//       moons[nextActive].className = moons[nextActive].className + ' ' + options.activeClass;
+
+//       if (typeof options.active == 'function')
+//         options.active(obj);
+
+
+//     }, speed);
+
+
+//   }
+
+// }
