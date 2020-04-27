@@ -13,7 +13,7 @@ import { set } from "animejs";
 const ANIMATION_SPEED_MS = 10;
 
 // Change this value for the number of circles (value) in the array.
-const NUMBER_OF_ARRAY_CIRCLES = 50;
+const NUMBER_OF_ARRAY_CIRCLES = 40;
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = "rgb(${value}, 12, 54)";
@@ -28,6 +28,7 @@ function RenderCircles({ array }) {
       {array.map((value, idx) => (
         <div
           className="array-circle"
+          id={idx}
           value={value}
           style={{
             backgroundColor: `rgb(${value}, 206, 133)`,
@@ -53,6 +54,7 @@ export default function TodosApp() {
   const [array, setArray] = useState(makeCircles());
 
   function handleReset() {
+    console.log(array, 'array from reset')
     const newCircles = makeCircles();
     setArray(newCircles);
   }
@@ -372,7 +374,8 @@ export default function TodosApp() {
 
             <div className="col-sm">
               <div className="array-container">
-                {array.map(value => Circle({ idx: value }))}
+                {/* {array.map(value => Circle({ idx: value }))} */}
+                {array.map((value, idx) => Circle(value, idx))}
 
                 <div>
                   <div id="center" className="orbit-center">
@@ -413,7 +416,7 @@ function arraysAreEqual(arrayOne, arrayTwo) {
   return true;
 }
 
-function Circle({ value, idx }) {
+function Circle( value, idx ) {
   const options = {
     activeClass: "active",
     content: "",
@@ -421,7 +424,7 @@ function Circle({ value, idx }) {
     // This changes the width of the circle, increase to make the circle bigger
     margin: 20,
     moonClass: "moon",
-    n: 12,
+    n: 40,
     radius: 150,
     removeOriginal: true,
     startAngle: 90
@@ -444,6 +447,10 @@ function Circle({ value, idx }) {
   const n = options.n;
   const div = 360 / n;
   const angle = 360 - options.startAngle;
+  
+  // Future Math algo fun 
+  // const angle = 360 - options.startAngle + (idx * Math.PI * Math.PI);
+
 
   const y = Math.sin((angle + div * idx) * (Math.PI / 180)) * options.radius;
   const x = Math.cos((angle + div * idx) * (Math.PI / 180)) * options.radius;
@@ -453,7 +460,8 @@ function Circle({ value, idx }) {
 
   return (
     <div
-      class="moon"
+      id={value}
+      className="moon"
       ref={targetRef}
       style={{
         position: "absolute",
@@ -464,7 +472,7 @@ function Circle({ value, idx }) {
     >
       <div style={{ position: "relative" }}>
         <div
-          classname="_moon_content new"
+          className="_moon_content new"
           style={{
             position: "absolute",
             width: "100%",
@@ -472,7 +480,7 @@ function Circle({ value, idx }) {
           }}
         >
           <div
-            class="array-circle"
+            className="array-circle"
             value="157"
             style={{
               backgroundColor: `rgb(${value}, 206, 133)`,
@@ -480,7 +488,7 @@ function Circle({ value, idx }) {
               top: "20%",
               width: "40px",
               height: "40px",
-              "border-color": "white"
+              borderColor: "white"
             }}
           />
         </div>
