@@ -1,51 +1,62 @@
 export function getQuickSortAnimations(array) {
 
-    console.log(array, ' array from qs')
-    let newArr = quickSort(array)
-    return newArr;
+    let items = array;
+    let animations = [];
 
-}
+    function swap(items, leftIndex, rightIndex) {
+        animations.push([leftIndex, rightIndex])
+        animations.push([leftIndex, rightIndex])
 
-function quickSort(arr) {
-    const animations = [];
+        let temp = items[leftIndex];
 
-    // Checks for valid array
-    if (arr.length === 1) { 
-        return arr;
+        items[leftIndex] = items[rightIndex];
+        items[rightIndex] = temp;
+
+        animations.push([leftIndex, items[leftIndex], rightIndex, items[rightIndex]]);
+
+
     }
 
-    // our pivot(element) is the last element in the array
-    var pivot = arr[arr.length - 1];
-    // We then set two empty arrays
-    var leftArr = [];
-    var rightArr = [];
-    
-    // Starting from the pivot we compare is the current element in the array is less then 
-    // our pivot and place it on a left array, if its equal to or greater we place it on the 
-    // right array 
-    for (let i = 0; i < arr.length - 1; i++) {
-        animations.push([i, pivot])
-        if (arr[i] < pivot) {
-            leftArr.push(arr[i]);
-            
-        } else {
-            rightArr.push(arr[i]);
 
+    function partition(items, left, right) {
+        let pivot = items[Math.floor((right + left) / 2)], //middle element
+            i = left, //left pointer
+            j = right; //right pointer
+        while (i <= j) {
+            while (items[i] < pivot) {
+                i++;
+            }
+            while (items[j] > pivot) {
+
+                j--;
+            }
+            if (i <= j) {
+                swap(items, i, j); //sawpping two elements
+                i++;
+                j--;
+            }
         }
+
+        return i;
     }
 
-    // As long as the left array and right array is greater than one element we keep 
-    // running quicksort recusively
-    if (leftArr.length > 0 && rightArr.length > 0) {
-    
-        return [...quickSort(leftArr), pivot, ...quickSort(rightArr)], animations;
-        // our pivot can be the last element so we keep quick sorting until the left array length is zero
-    } else if (leftArr.length > 0) {
+    function quickSort(items, left, right) {
 
-        return [...quickSort(leftArr), pivot], animations;
-        // our pivot could have move to the front so we have conditional to quick sort to the right array as well
-    } else {
+        let index;
+        if (items.length > 1) {
+            index = partition(items, left, right); //index returned from partition
+            if (left < index - 1) { //more elements on the left side of the pivot
+                quickSort(items, left, index - 1);
+            }
+            if (index < right) { //more elements on the right side of the pivot
+                quickSort(items, index, right);
+            }
+        }
 
-        return [pivot, ...quickSort(rightArr)], animations;
+        return items;
     }
+    // first call to quick sort
+    let sortedArray = quickSort(items, 0, items.length - 1);
+    console.log(sortedArray); //prints [2,3,5,6,7,9]
+    return sortedArray, animations;
 }

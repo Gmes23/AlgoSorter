@@ -1,7 +1,7 @@
 .array-container {
   position: absolute;
-  left: 100px;
-  top: 200px;
+  left: 35vw;
+  top: 30vh;
 }
 
 .array-bar {
@@ -15,12 +15,8 @@
   border-radius: 50%;
   width: 100%;
   height: 100%;
-  /* font-size: 25px; */
 }
 
-.gm-canvas {
-/* todo  */
-}
 
 button {
   background: transparent;

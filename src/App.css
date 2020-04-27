@@ -70,13 +70,9 @@
 
 .orbit-center {
   position: relative;
-  width: 90px;
-  height: 90px;
-  margin: 150px auto;
-  text-align: center;
-  line-height: 90px;
-  padding: 0px;
-  font-size: 60px
+  font-size: 60px;
+  bottom: 34px;
+  left: 5px;
 }
 
 .moon {
@@ -144,10 +140,17 @@
   font-size: 1em;
 }
 
-/* .array-circle {
-  position: 'relative';
-  top: '20%';
-  width: '40px';
-  height: '40px';
-  border-color: 'white';
-} */
+/* Landscape phones and down */
+@media (max-width: 480px) {
+
+
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {  }
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) { }
+
+/* Large desktop */
+@media (min-width: 1200px) {  }

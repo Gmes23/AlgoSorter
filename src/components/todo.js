@@ -1,13 +1,12 @@
 import React, { useReducer, useState, useEffect, useRef } from "react";
 import { getMergeSortAnimations } from "./mergeSort.js";
 import { getBubbleSortAnimations } from "./bubbleSort.js";
-import { getQuickSortAnimations } from "./quickSort2.js";
+import { getQuickSortAnimations } from "./quickSort.js";
 import { getMaxHeapAnimations } from "./heapSort.js";
 
 import "./sortingVisualizer.css";
 
 import { Nav, Container, Row, Col } from "react-bootstrap";
-import { set } from "animejs";
 
 // Change this value for the speed of the animations.
 const ANIMATION_SPEED_MS = 10;
@@ -15,11 +14,6 @@ const ANIMATION_SPEED_MS = 10;
 // Change this value for the number of circles (value) in the array.
 const NUMBER_OF_ARRAY_CIRCLES = 40;
 
-// This is the main color of the array bars.
-const PRIMARY_COLOR = "rgb(${value}, 12, 54)";
-
-// This is the color of array bars that are being compared throughout the animations.
-const SECONDARY_COLOR = "rgb(${value}, 12, 54)";
 
 function RenderCircles({ array }) {
   console.log("Rendering circles with array:", array);
@@ -32,7 +26,6 @@ function RenderCircles({ array }) {
           value={value}
           style={{
             backgroundColor: `rgb(${value}, 206, 133)`,
-            // height: `${value}px`,
             position: "relative",
             top: "20%",
             width: "40px",
@@ -370,9 +363,7 @@ export default function TodosApp() {
       <div className="gm-body">
         <div className="container">
           <div className="row">
-            <div className="col-sm" />
-
-            <div className="col-sm">
+            <div className="col-md">
               <div className="array-container">
                 {/* {array.map(value => Circle({ idx: value }))} */}
                 {array.map((value, idx) => Circle(value, idx))}
@@ -384,8 +375,6 @@ export default function TodosApp() {
                 </div>
               </div>
             </div>
-
-            <div className="col-sm" />
           </div>
         </div>
       </div>
@@ -405,27 +394,19 @@ function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-// Not working
-function arraysAreEqual(arrayOne, arrayTwo) {
-  if (arrayOne.length !== arrayTwo.length) return false;
-  for (let i = 0; i < arrayOne.length; i++) {
-    if (arrayOne[i] !== arrayTwo[i]) {
-      return false;
-    }
-  }
-  return true;
-}
 
-function Circle( value, idx ) {
+function Circle(value, idx) {
   const options = {
     activeClass: "active",
     content: "",
     degrees: 360,
     // This changes the width of the circle, increase to make the circle bigger
-    margin: 20,
+    margin: 0,
     moonClass: "moon",
+    // This changes the amount of circles being rendered 
     n: 40,
-    radius: 150,
+    // Radius of the circle in pixels 
+    radius: 233,
     removeOriginal: true,
     startAngle: 90
   };
@@ -447,10 +428,9 @@ function Circle( value, idx ) {
   const n = options.n;
   const div = 360 / n;
   const angle = 360 - options.startAngle;
-  
+
   // Future Math algo fun 
   // const angle = 360 - options.startAngle + (idx * Math.PI * Math.PI);
-
 
   const y = Math.sin((angle + div * idx) * (Math.PI / 180)) * options.radius;
   const x = Math.cos((angle + div * idx) * (Math.PI / 180)) * options.radius;
@@ -460,7 +440,7 @@ function Circle( value, idx ) {
 
   return (
     <div
-      id={value}
+      key={idx}
       className="moon"
       ref={targetRef}
       style={{
@@ -496,273 +476,3 @@ function Circle( value, idx ) {
     </div>
   );
 }
-
-// // From https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
-// function randomIntFromInterval(min, max) {
-//   // min and max included
-//   return Math.floor(Math.random() * (max - min + 1) + min);
-// }
-
-// // Not working 
-// function arraysAreEqual(arrayOne, arrayTwo) {
-//   if (arrayOne.length !== arrayTwo.length) return false;
-//   for (let i = 0; i < arrayOne.length; i++) {
-//     if (arrayOne[i] !== arrayTwo[i]) {
-//       return false;
-//     }
-//   }
-//   return true;
-// }
-
-
-
-// var MoonMap = function (querySelector, options) {
-
-//   // keep track of the moons we've added
-//   this.moons = [];
-
-//   this.lastRotation = 0;
-//   this.selector = querySelector;
-
-//   // keep track of the currently active moon
-//   this.currentlyActive = -1;
-
-//   if (typeof options !== 'object')
-//     options = {};
-
-//   var defaults = {
-//     active: function () { }, // active event
-//     activeClass: 'active',
-//     content: '',
-//     degrees: 360,
-//     // This changes the width of the circle, increase to make the circle bigger
-//     margin: 100,
-//     moonClass: 'moon',
-//     n: 12,
-//     radius: false,
-//     removeOriginal: true,
-//     startAngle: 90
-//   };
-
-//   // Define the method for merging options
-//   this.extend = function (a, b) {
-//     for (var key in b) {
-//       if (b.hasOwnProperty(key)) {
-//         a[key] = b[key];
-//       }
-//     }
-//     return a;
-//   }
-
-//   // Make sure a querySelector was defined
-//   if (typeof querySelector == 'undefined') {
-//     console.error('No query selector was provided to the MoonMap constructor');
-//     return;
-//   }
-
-//   var element = document.querySelector(querySelector);
-//   this.options = this.extend(defaults, options);
-//   this.map = element;
-
-//   this.makeAbsolute = function (str) {
-//     return '<div style="position:relative"><div className="_moon_content" style="position:absolute;width:100%;height:100%">' + str + '</div></div>';
-//   }
-//   console.log(element, 'element ')
-
-//   if (!this.options.radius)
-//     this.options.radius = element.offsetWidth + this.options.margin;
-
-//   // Calculate the offsets
-//   var offsetToParentCenter = parseInt(element.offsetWidth / 2);  //assumes parent is square
-
-//   // Append the moons
-//   if (typeof this.options['moonSelector'] !== 'undefined') {
-
-//     // moons are defined in the DOM
-//     var moons = document.querySelectorAll(this.options['moonSelector']),
-//       n = moons.length,
-//       div = 360 / n,
-//       angle = 360 - this.options.startAngle;
-
-//     for (var i = 0; i < n; ++i) {
-
-//       var moon = document.createElement('div'),
-//         node = moons[i].cloneNode(true),
-//         y = Math.sin((angle) * (Math.PI / 180)) * this.options.radius,
-//         x = Math.cos((angle) * (Math.PI / 180)) * this.options.radius;
-
-//       moon.className = this.options.moonClass;
-//       moon.style.position = 'absolute';
-//       moon.style.visibility = 'hidden';
-//       moon.innerHTML = this.makeAbsolute(node.outerHTML);
-
-//       element.appendChild(moon);
-
-//       var offsetToChildCenter = moon.offsetWidth / 2,
-//         totalOffset = offsetToParentCenter - offsetToChildCenter;
-
-
-//       moon.style.top = (y + totalOffset).toString() + "px";
-//       moon.style.left = (x + totalOffset).toString() + "px";
-//       moon.style.visibility = 'visible';
-
-
-//       if (this.options.removeOriginal)
-//         moons[i].parentNode.removeChild(moons[i]);
-
-//       this.moons.push(moon);
-
-//       angle += div;
-//     }
-
-
-//   } else {
-
-//     // moons are NOT defined in the DOM, and are added programmatically
-//     var n = this.options.n,
-//       div = 360 / n,
-//       angle = 360 - this.options.startAngle;
-
-
-//     for (var i = 1; i <= this.options.n; ++i) {
-
-//       var moon = document.createElement('div'),
-//         y = Math.sin((angle) * (Math.PI / 180)) * this.options.radius,
-//         x = Math.cos((angle) * (Math.PI / 180)) * this.options.radius;
-
-//       moon.className = this.options.moonClass;
-//       moon.style.position = 'absolute';
-//       moon.style.visibility = 'hidden';
-
-//       // check to see if a content setter function was passed in the options
-//       if (typeof this.options.content == 'function') {
-
-//         moon.innerHTML = this.makeAbsolute(this.options.content(i, moon));
-
-//       } else if (this.options.content) {
-
-//         moon.innerHTML = this.makeAbsolute(this.options.content);
-//       }
-
-//       element.appendChild(moon);
-
-//       var offsetToChildCenter = moon.offsetWidth / 2,
-//         totalOffset = offsetToParentCenter - offsetToChildCenter;
-
-//       moon.style.top = (y + totalOffset).toString() + "px";
-//       moon.style.left = (x + totalOffset).toString() + "px";
-//       moon.style.visibility = 'visible';
-
-
-//       this.moons.push(moon);
-
-//       angle += div;
-
-//     }
-
-//   }
-
-//   this.moonEvent = function (event, fn) {
-
-//     var map = this;
-
-//     for (var i = 0; i < this.moons.length; i++) {
-
-//       this.moons[i].addEventListener(event, function () {
-
-//         fn(this, map);
-//       });
-
-//     }
-
-//   }
-
-//   this.rotateMoons = function (degrees, ms) {
-
-//     if (typeof degrees == 'undefined')
-//       degrees = 90;
-
-//     if (typeof ms == 'undefined')
-//       ms = 1000;
-
-//     var seconds = ms / 1000,
-//       prefixes = ['-webkit-', '-moz-', '-o-', '-ms-', ''],
-//       newPosition = this.lastRotation + degrees;
-
-//     this.lastRotation = degrees;
-
-//     for (var k = 0; k < prefixes.length; k++) {
-
-//       var prefix = prefixes[k];
-
-//       this.map.style[prefix + 'transition'] = 'all ' + seconds + 's ease-in-out';
-//       this.map.style[prefix + 'transform'] = 'rotate(' + degrees + 'deg)';
-
-
-
-//     }
-
-//   }
-
-//   this.current = function () {
-
-//     return this.currentlyActive;
-//   }
-
-//   this.next = function () {
-
-//     var nextActive = this.currentlyActive + 1;
-
-//     if (nextActive > this.moons.length - 1)
-//       nextActive = 0;
-
-//     return nextActive;
-
-
-//   }
-
-//   // this.previous = function(){
-
-//   // 	prevActive = this.currentlyActive -1;
-
-//   // 	if (typeof this.moons[prevActive] == 'undefined')
-//   // 		prevActive = this.moons.length-1;
-
-//   // 	return prevActive;
-
-
-//   // }
-
-//   this.startCarousel = function (speed) {
-
-//     if (typeof speed == 'undefined')
-//       speed = 1200;
-
-//     var obj = this,
-//       options = this.options;
-
-//     setInterval(function () {
-
-//       var moons = obj.moons,
-//         prevActive = obj.current(),
-//         nextActive = obj.next();
-
-//       obj.currentlyActive = nextActive;
-
-//       // Remove the highlighted class
-//       if (typeof moons[prevActive] !== 'undefined')
-//         moons[prevActive].className = 'moon';
-
-//       // Add the highlighted class to the newly activated element
-//       moons[nextActive].className = moons[nextActive].className + ' ' + options.activeClass;
-
-//       if (typeof options.active == 'function')
-//         options.active(obj);
-
-
-//     }, speed);
-
-
-//   }
-
-// }
