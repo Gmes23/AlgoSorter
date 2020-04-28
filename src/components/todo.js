@@ -8,6 +8,27 @@ import "./sortingVisualizer.css";
 
 import { Nav, Container, Row, Col } from "react-bootstrap";
 
+
+function Waves() {
+  return (
+    <div>
+          <svg class="waves" xmlns="http://www.w3.org/2000/svg" link="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+          <defs>
+            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+          </defs>
+          <g class="parallax" stroke="none" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+          <polyline id="Path-7" points="1.28303023 1.16256382 7.78303023 6.6486721 1.28303023 12.1486721 1.28303023 1.20000005"></polyline>
+                <use xlinkHref="#gentle-wave" x="48" y="0" fill="rgba(149,207,182,0.8)" />
+                <use xlinkHref="#gentle-wave" x="48" y="3" fill="rgba(0,87,255,0.8)" />
+                <use xlinkHref="#gentle-wave" x="48" y="5" fill="rgba(238,115,115,0.8)" />
+                {/* <use xlinkHref="#gentle-wave" x="48" y="7" fill="#000000" /> */}
+            </g>
+        </svg>
+    </div>
+  )
+}
+
+
 // Change this value for the speed of the animations.
 const ANIMATION_SPEED_MS = 10;
 
@@ -382,6 +403,8 @@ export default function TodosApp() {
       {/*  FOOTER  */}
       <div className="gm-footer">
         <h3 className="gm-font"> 255 </h3>
+
+        {/* <Waves /> */}
         {/* <canvas className="gm-canvas" width="600" height="300"></canvas> */}
       </div>
     </div>
