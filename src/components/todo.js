@@ -18,9 +18,9 @@ function Waves() {
           </defs>
           <g class="parallax" stroke="none" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
           <polyline id="Path-7" points="1.28303023 1.16256382 7.78303023 6.6486721 1.28303023 12.1486721 1.28303023 1.20000005"></polyline>
-                <use xlinkHref="#gentle-wave" x="48" y="0" fill="rgba(149,207,182,0.8)" />
-                <use xlinkHref="#gentle-wave" x="48" y="3" fill="rgba(0,87,255,0.8)" />
-                <use xlinkHref="#gentle-wave" x="48" y="5" fill="rgba(238,115,115,0.8)" />
+                <use xlinkHref="#gentle-wave" x="49" y="20" fill="rgba(149,207,182,0.8)" />
+                <use xlinkHref="#gentle-wave" x="49" y="15" fill="rgba(0,87,255,0.8)" />
+                <use xlinkHref="#gentle-wave" x="49" y="8" fill="rgba(238,115,115,0.8)" />
                 {/* <use xlinkHref="#gentle-wave" x="48" y="7" fill="#000000" /> */}
             </g>
         </svg>
@@ -34,6 +34,12 @@ const ANIMATION_SPEED_MS = 10;
 
 // Change this value for the number of circles (value) in the array.
 const NUMBER_OF_ARRAY_CIRCLES = 40;
+
+// Changes the color of selected circle
+const BORDER_COLOR = `black`;
+
+// Color of currently selected or swapped circle
+const SELECTED_COLOR = `#0057ff`;
 
 
 function RenderCircles({ array }) {
@@ -88,7 +94,7 @@ export default function TodosApp() {
             ? `rgb(${barTwoIdx}, 206, 133)`
             : `rgb(${barOneIdx}, 206, 133)`;
         const border = i % 3 === 0 ? `solid` : `solid`;
-        const borderColor = i % 3 === 0 ? `white` : `#0057ff`;
+        const borderColor = i % 3 === 0 ? SELECTED_COLOR : BORDER_COLOR;
 
         setTimeout(() => {
           barOneStyle.backgroundColor = color;
@@ -127,7 +133,7 @@ export default function TodosApp() {
             ? barOneStyle.backgroundColor
             : barTwoStyle.backgroundColor;
         const border = i % 3 === 0 ? `solid` : `solid`;
-        const borderColor = i % 3 === 0 ? `white` : `#0057ff`;
+        const borderColor = i % 3 === 0 ? SELECTED_COLOR : BORDER_COLOR;
 
         setTimeout(() => {
           barOneStyle.backgroundColor = color;
@@ -189,7 +195,7 @@ export default function TodosApp() {
             ? barOneStyle.backgroundColor
             : barTwoStyle.backgroundColor;
         const border = i % 3 === 0 ? `solid` : `solid`;
-        const borderColor = i % 3 === 0 ? `white` : `#0057ff`;
+        const borderColor = i % 3 === 0 ? SELECTED_COLOR : BORDER_COLOR;
 
         setTimeout(() => {
           barOneStyle.backgroundColor = color;
@@ -255,7 +261,7 @@ export default function TodosApp() {
             : barTwoStyle.backgroundColor;
 
         const border = i % 3 === 0 ? `solid` : `solid`;
-        const borderColor = i % 3 === 0 ? `white` : `#0057ff`;
+        const borderColor = i % 3 === 0 ? SELECTED_COLOR : BORDER_COLOR;
 
         setTimeout(() => {
           barOneStyle.backgroundColor = color;
@@ -337,7 +343,7 @@ export default function TodosApp() {
                 <Nav className="justify-content-end" as="ul">
                   <Nav.Item as="li">
                     <Nav.Link>
-                      <button className="gm-font" onClick={() => handleReset()}>
+                        <button className="gm-font fill-font" onClick={() => handleReset()}>
                         Reset
                       </button>
                     </Nav.Link>
@@ -391,7 +397,7 @@ export default function TodosApp() {
 
                 <div>
                   <div id="center" className="orbit-center">
-                    <span className="gm-font"> π </span>
+                    <button><span className="gm-font" onClick={()=> handleReset()}> π </span></button>
                   </div>
                 </div>
               </div>
@@ -491,7 +497,6 @@ function Circle(value, idx) {
               top: "20%",
               width: "40px",
               height: "40px",
-              borderColor: "white"
             }}
           />
         </div>
