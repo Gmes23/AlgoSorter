@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.css": "/build/static/css/main.3936e2ac.chunk.css",
-    "main.js": "/build/static/js/main.d8854765.chunk.js",
+    "main.css": "/build/static/css/main.802ed1eb.chunk.css",
+    "main.js": "/build/static/js/main.2f2bfa85.chunk.js",
     "runtime-main.js": "/build/static/js/runtime-main.39ff2ee5.js",
     "static/css/2.35013e12.chunk.css": "/build/static/css/2.35013e12.chunk.css",
     "static/js/2.8bb2dd80.chunk.js": "/build/static/js/2.8bb2dd80.chunk.js",
     "index.html": "/build/index.html",
-    "precache-manifest.d2265be1c9d6d0037dd77c511fc0f035.js": "/build/precache-manifest.d2265be1c9d6d0037dd77c511fc0f035.js",
+    "precache-manifest.58d9a4db337c04cd61d27bb35cabf331.js": "/build/precache-manifest.58d9a4db337c04cd61d27bb35cabf331.js",
     "service-worker.js": "/build/service-worker.js",
     "static/js/2.8bb2dd80.chunk.js.LICENSE.txt": "/build/static/js/2.8bb2dd80.chunk.js.LICENSE.txt",
     "static/media/App.css": "/build/static/media/wotfard-regular-webfont.2923aa61.ttf"
@@ -15,7 +15,7 @@
     "static/js/runtime-main.39ff2ee5.js",
     "static/css/2.35013e12.chunk.css",
     "static/js/2.8bb2dd80.chunk.js",
-    "static/css/main.3936e2ac.chunk.css",
-    "static/js/main.d8854765.chunk.js"
+    "static/css/main.802ed1eb.chunk.css",
+    "static/js/main.2f2bfa85.chunk.js"
   ]
 }
