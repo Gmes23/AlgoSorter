@@ -43,7 +43,7 @@
   "devDependencies": {
     "autoprefixer": "^9.7.5",
     "postcss-cli": "^7.1.0",
-    "three": "^0.115.0"
+    "three": "^0.137.0"
   }
   
 }
